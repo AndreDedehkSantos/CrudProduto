@@ -37,7 +37,8 @@ namespace CrudProduto
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 		    services.AddDbContext<CrudProdutoContext>(options =>
-		            options.UseSqlServer(Configuration.GetConnectionString("CrudProdutoContext")));
+					options.UseMySql(Configuration.GetConnectionString("CrudProdutoContext"), builder =>
+						builder.MigrationsAssembly("CrudProduto")));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using CrudProduto.Models;
 
 namespace CrudProduto.Models
 {
@@ -14,5 +15,7 @@ namespace CrudProduto.Models
         }
 
         public DbSet<CrudProduto.Models.AcessorioBasico> AcessorioBasico { get; set; }
+
+        public DbSet<CrudProduto.Models.AcessorioOpcional> AcessorioOpcional { get; set; }
     }
 }
