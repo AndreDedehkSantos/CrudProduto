@@ -8,33 +8,35 @@ namespace CrudProduto.Bussiness
 {
 	public class ValidarDadosProduto : IStrategy
 	{
-		public string processar(EntidadeDominio p)
+		public ICollection<string> processar(EntidadeDominio p)
 		{
 			Produto produto = (Produto) p;
+			ICollection<string> erro = new List<string>();
 			if(produto.nome == null)
 			{
-				return "Nome inválido";
+				erro.Add("Nome do Porduto Inválido");
 			}
-			else if(produto.quantidade == 0)
+			if(produto.quantidade <= 0)
 			{
-				return "Quantidade inválida";
+				erro.Add("Quantidade Inválida");
 			}
-			else if (produto.dataCompra == null)
+			if (produto.dataCompra == null)
 			{
-				return "Data da compra inválida";
+				erro.Add("Data da compra Inválida");
 			}
-			else if(produto.comprador == null)
+			if(produto.comprador == null)
 			{
-				return "Comprador inválido";
+				erro.Add("Comprador do Porduto Inválido");
 			}
-			else if(produto.valorCompra == 0)
+			if(produto.valorCompra <= 0.0)
 			{
-				return "Valor da compra inválido";
+				erro.Add("Valor da compra do Porduto Inválido");
 			}
-			else
+			if(produto.linhaProduto == null)
 			{
-				return null;
+				erro.Add("Selecione uma Linha de Produtos");
 			}
+			return erro;
 		}
 	}
 }

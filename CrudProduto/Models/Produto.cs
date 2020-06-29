@@ -12,6 +12,7 @@ namespace CrudProduto.Models
 		public string comprador { get; set; }
 		public bool status { get; set; }
 		public FichaTecnica fichaTecnica { get; set; }
+		public LinhaProduto linhaProduto { get; set; }
 		public ICollection<AcessorioOpcional> acessorios { get; set; } = new List<AcessorioOpcional>();
 
 		public Produto()
@@ -28,6 +29,16 @@ namespace CrudProduto.Models
 			this.comprador = comprador;
 			this.status = status;
 			this.fichaTecnica = fichaTecnica;
+		}
+
+		public void AddAcessorio(AcessorioOpcional acessorio)
+		{
+			acessorios.Add(acessorio);
+		}
+
+		public void RemoveAcessorios(AcessorioOpcional acessorio)
+		{
+			acessorios.Remove(acessorio);
 		}
 	}
 }

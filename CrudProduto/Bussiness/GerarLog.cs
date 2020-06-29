@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace CrudProduto.Bussiness
 {
-	public interface IStrategy
+	public class GerarLog : IStrategy
 	{
-		ICollection<string> processar(EntidadeDominio entidadeDominio);
+		public ICollection<string> processar(EntidadeDominio entidadeDominio)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
