@@ -5,7 +5,7 @@ namespace CrudProduto.Models
 	public class LinhaProduto : EntidadeDominio
 	{ 
 		public string nome { get; set; }
-		public ICollection<AcessorioBasico> acessorios { get; set; } = new List<AcessorioBasico>();
+		public ICollection<Acessorio> acessorios { get; set; } = new List<Acessorio>();
 
 		public LinhaProduto()
 		{
@@ -17,12 +17,12 @@ namespace CrudProduto.Models
 			this.nome = nome;
 		}
 
-		public void AddAcessorio(AcessorioBasico acessorio)
+		public void AddAcessorio(Acessorio acessorio)
 		{
 			acessorios.Add(acessorio);
 		}
 
-		public void RemoveAcessorio(AcessorioBasico acessorio)
+		public void RemoveAcessorio(Acessorio acessorio)
 		{
 			acessorios.Remove(acessorio);
 		}

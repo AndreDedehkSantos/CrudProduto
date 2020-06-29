@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CrudProduto.Models.AcessorioOpcional>
+﻿@model IEnumerable<CrudProduto.Models.LinhaProduto>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,12 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.nome)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.quantidade)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -29,12 +23,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.quantidade)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |

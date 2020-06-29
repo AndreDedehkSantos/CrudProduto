@@ -13,7 +13,7 @@ namespace CrudProduto.Models
 		public bool status { get; set; }
 		public FichaTecnica fichaTecnica { get; set; }
 		public LinhaProduto linhaProduto { get; set; }
-		public ICollection<AcessorioOpcional> acessorios { get; set; } = new List<AcessorioOpcional>();
+		public ICollection<Acessorio> acessorios { get; set; } = new List<Acessorio>();
 
 		public Produto()
 		{
@@ -31,12 +31,12 @@ namespace CrudProduto.Models
 			this.fichaTecnica = fichaTecnica;
 		}
 
-		public void AddAcessorio(AcessorioOpcional acessorio)
+		public void AddAcessorio(Acessorio acessorio)
 		{
 			acessorios.Add(acessorio);
 		}
 
-		public void RemoveAcessorios(AcessorioOpcional acessorio)
+		public void RemoveAcessorios(Acessorio acessorio)
 		{
 			acessorios.Remove(acessorio);
 		}

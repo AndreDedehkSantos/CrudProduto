@@ -14,9 +14,7 @@ namespace CrudProduto.Models
         {
         }
 
-        public DbSet<AcessorioBasico> AcessorioBasico { get; set; }
-
-        public DbSet<AcessorioOpcional> AcessorioOpcional { get; set; }
+        public DbSet<Acessorio> Acessorio { get; set; }
 
         public DbSet<FichaTecnica> FichaTecnica { get; set; }
 

@@ -9,22 +9,22 @@ using CrudProduto.Models;
 
 namespace CrudProduto.Controllers
 {
-    public class AcessorioBasicosController : Controller
+    public class ProdutoesController : Controller
     {
         private readonly CrudProdutoContext _context;
 
-        public AcessorioBasicosController(CrudProdutoContext context)
+        public ProdutoesController(CrudProdutoContext context)
         {
             _context = context;
         }
 
-        // GET: AcessorioBasicos
+        // GET: Produtoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AcessorioBasico.ToListAsync());
+            return View(await _context.Produto.ToListAsync());
         }
 
-        // GET: AcessorioBasicos/Details/5
+        // GET: Produtoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace CrudProduto.Controllers
                 return NotFound();
             }
 
-            var acessorioBasico = await _context.AcessorioBasico
+            var produto = await _context.Produto
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (acessorioBasico == null)
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            return View(acessorioBasico);
+            return View(produto);
         }
 
-        // GET: AcessorioBasicos/Create
+        // GET: Produtoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: AcessorioBasicos/Create
+        // POST: Produtoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,descricao,quantidade")] AcessorioBasico acessorioBasico)
+        public async Task<IActionResult> Create([Bind("nome,valorCompra,dataCompra,quantidade,comprador,status,id,descLog")] Produto produto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(acessorioBasico);
+                _context.Add(produto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(acessorioBasico);
+            return View(produto);
         }
 
-        // GET: AcessorioBasicos/Edit/5
+        // GET: Produtoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace CrudProduto.Controllers
                 return NotFound();
             }
 
-            var acessorioBasico = await _context.AcessorioBasico.FindAsync(id);
-            if (acessorioBasico == null)
+            var produto = await _context.Produto.FindAsync(id);
+            if (produto == null)
             {
                 return NotFound();
             }
-            return View(acessorioBasico);
+            return View(produto);
         }
 
-        // POST: AcessorioBasicos/Edit/5
+        // POST: Produtoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,descricao,quantidade")] AcessorioBasico acessorioBasico)
+        public async Task<IActionResult> Edit(int id, [Bind("nome,valorCompra,dataCompra,quantidade,comprador,status,id,descLog")] Produto produto)
         {
-            if (id != acessorioBasico.id)
+            if (id != produto.id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace CrudProduto.Controllers
             {
                 try
                 {
-                    _context.Update(acessorioBasico);
+                    _context.Update(produto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AcessorioBasicoExists(acessorioBasico.id))
+                    if (!ProdutoExists(produto.id))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace CrudProduto.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(acessorioBasico);
+            return View(produto);
         }
 
-        // GET: AcessorioBasicos/Delete/5
+        // GET: Produtoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace CrudProduto.Controllers
                 return NotFound();
             }
 
-            var acessorioBasico = await _context.AcessorioBasico
+            var produto = await _context.Produto
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (acessorioBasico == null)
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            return View(acessorioBasico);
+            return View(produto);
         }
 
-        // POST: AcessorioBasicos/Delete/5
+        // POST: Produtoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var acessorioBasico = await _context.AcessorioBasico.FindAsync(id);
-            _context.AcessorioBasico.Remove(acessorioBasico);
+            var produto = await _context.Produto.FindAsync(id);
+            _context.Produto.Remove(produto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AcessorioBasicoExists(int id)
+        private bool ProdutoExists(int id)
         {
-            return _context.AcessorioBasico.Any(e => e.id == id);
+            return _context.Produto.Any(e => e.id == id);
         }
     }
 }

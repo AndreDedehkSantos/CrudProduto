@@ -9,22 +9,22 @@ using CrudProduto.Models;
 
 namespace CrudProduto.Controllers
 {
-    public class AcessorioOpcionaisController : Controller
+    public class LogsController : Controller
     {
         private readonly CrudProdutoContext _context;
 
-        public AcessorioOpcionaisController(CrudProdutoContext context)
+        public LogsController(CrudProdutoContext context)
         {
             _context = context;
         }
 
-        // GET: AcessorioOpcionals
+        // GET: Logs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AcessorioOpcional.ToListAsync());
+            return View(await _context.Log.ToListAsync());
         }
 
-        // GET: AcessorioOpcionals/Details/5
+        // GET: Logs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace CrudProduto.Controllers
                 return NotFound();
             }
 
-            var acessorioOpcional = await _context.AcessorioOpcional
+            var log = await _context.Log
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (acessorioOpcional == null)
+            if (log == null)
             {
                 return NotFound();
             }
 
-            return View(acessorioOpcional);
+            return View(log);
         }
 
-        // GET: AcessorioOpcionals/Create
+        // GET: Logs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: AcessorioOpcionals/Create
+        // POST: Logs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,descricao,quantidade")] AcessorioOpcional acessorioOpcional)
+        public async Task<IActionResult> Create([Bind("dataHora,idUsuario,descricao,id,descLog")] Log log)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(acessorioOpcional);
+                _context.Add(log);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(acessorioOpcional);
+            return View(log);
         }
 
-        // GET: AcessorioOpcionals/Edit/5
+        // GET: Logs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace CrudProduto.Controllers
                 return NotFound();
             }
 
-            var acessorioOpcional = await _context.AcessorioOpcional.FindAsync(id);
-            if (acessorioOpcional == null)
+            var log = await _context.Log.FindAsync(id);
+            if (log == null)
             {
                 return NotFound();
             }
-            return View(acessorioOpcional);
+            return View(log);
         }
 
-        // POST: AcessorioOpcionals/Edit/5
+        // POST: Logs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,descricao,quantidade")] AcessorioOpcional acessorioOpcional)
+        public async Task<IActionResult> Edit(int id, [Bind("dataHora,idUsuario,descricao,id,descLog")] Log log)
         {
-            if (id != acessorioOpcional.id)
+            if (id != log.id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace CrudProduto.Controllers
             {
                 try
                 {
-                    _context.Update(acessorioOpcional);
+                    _context.Update(log);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AcessorioOpcionalExists(acessorioOpcional.id))
+                    if (!LogExists(log.id))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace CrudProduto.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(acessorioOpcional);
+            return View(log);
         }
 
-        // GET: AcessorioOpcionals/Delete/5
+        // GET: Logs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace CrudProduto.Controllers
                 return NotFound();
             }
 
-            var acessorioOpcional = await _context.AcessorioOpcional
+            var log = await _context.Log
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (acessorioOpcional == null)
+            if (log == null)
             {
                 return NotFound();
             }
 
-            return View(acessorioOpcional);
+            return View(log);
         }
 
-        // POST: AcessorioOpcionals/Delete/5
+        // POST: Logs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var acessorioOpcional = await _context.AcessorioOpcional.FindAsync(id);
-            _context.AcessorioOpcional.Remove(acessorioOpcional);
+            var log = await _context.Log.FindAsync(id);
+            _context.Log.Remove(log);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AcessorioOpcionalExists(int id)
+        private bool LogExists(int id)
         {
-            return _context.AcessorioOpcional.Any(e => e.id == id);
+            return _context.Log.Any(e => e.id == id);
         }
     }
 }

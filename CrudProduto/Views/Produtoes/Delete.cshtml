@@ -1,4 +1,4 @@
-﻿@model CrudProduto.Models.AcessorioOpcional
+﻿@model CrudProduto.Models.Produto
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,7 +8,7 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>AcessorioOpcional</h4>
+    <h4>Produto</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -18,16 +18,34 @@
             @Html.DisplayFor(model => model.nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.descricao)
+            @Html.DisplayNameFor(model => model.valorCompra)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.descricao)
+            @Html.DisplayFor(model => model.valorCompra)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.dataCompra)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.dataCompra)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.quantidade)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.quantidade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.comprador)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.comprador)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.status)
         </dd>
     </dl>
     

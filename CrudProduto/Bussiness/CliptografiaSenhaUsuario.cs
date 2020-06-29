@@ -13,13 +13,13 @@ namespace CrudProduto.Bussiness
 		{
 			Usuario usuario = (Usuario)u;
 			ICollection<string> senha = new List<string>();
-			senha.Add(CliptogradaSenha(usuario.senha1).ToString());
-			senha.Add(CliptogradaSenha(usuario.senha2).ToString());
+			senha.Add(CliptografadaSenha(usuario.senha1).ToString());
+			senha.Add(CliptografadaSenha(usuario.senha2).ToString());
 			return senha;
 			
 		}
 
-		private StringBuilder CliptogradaSenha(string senha)
+		private StringBuilder CliptografadaSenha(string senha)
 		{
 			char[] senha2 = new char[senha.Length];
 			StringBuilder senhaClip = new StringBuilder();

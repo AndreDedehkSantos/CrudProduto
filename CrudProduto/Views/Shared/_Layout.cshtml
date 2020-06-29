@@ -1,42 +1,32 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CrudProduto</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - CRUD Produto</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CrudProduto</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<label style="color:white;" class="collapse navbar-collapse navbar-light" id="navbarNav">CRUD Produto</label>
+			<ul class="nav navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" asp-area="" asp-controller="Produtoes" asp-action="Index">Meus Produtos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" asp-area="" asp-controller="LinhaProdutoes" asp-action="Index">Nova Linha de Produtos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" asp-area="" asp-controller="Acessorios" asp-action="Index">Novo Acessorio</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
 
     <partial name="_CookieConsentPartial" />
 

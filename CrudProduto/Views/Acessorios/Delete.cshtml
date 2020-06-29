@@ -1,13 +1,14 @@
-﻿@model CrudProduto.Models.AcessorioBasico
+﻿@model CrudProduto.Models.Acessorio
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
 
-<h2>Details</h2>
+<h2>Delete</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>AcessorioBasico</h4>
+    <h4>Acessorio</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -29,8 +30,10 @@
             @Html.DisplayFor(model => model.quantidade)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
 </div>

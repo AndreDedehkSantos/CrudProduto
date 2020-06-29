@@ -3,32 +3,32 @@ using System;
 using CrudProduto.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CrudProduto.Migrations
 {
     [DbContext(typeof(CrudProdutoContext))]
-    partial class CrudProdutoContextModelSnapshot : ModelSnapshot
+    [Migration("20200629182311_MoreOne")]
+    partial class MoreOne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("CrudProduto.Models.Acessorio", b =>
+            modelBuilder.Entity("CrudProduto.Models.AcessorioBasico", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("LinhaProdutoid");
-
-                    b.Property<int?>("Produtoid");
-
                     b.Property<string>("descLog");
 
                     b.Property<string>("descricao");
+
+                    b.Property<int?>("linhaProdutoid");
 
                     b.Property<string>("nome");
 
@@ -36,11 +36,31 @@ namespace CrudProduto.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("LinhaProdutoid");
+                    b.HasIndex("linhaProdutoid");
 
-                    b.HasIndex("Produtoid");
+                    b.ToTable("AcessorioBasico");
+                });
 
-                    b.ToTable("Acessorio");
+            modelBuilder.Entity("CrudProduto.Models.AcessorioOpcional", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("descLog");
+
+                    b.Property<string>("descricao");
+
+                    b.Property<string>("nome");
+
+                    b.Property<int?>("produtoid");
+
+                    b.Property<int>("quantidade");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("produtoid");
+
+                    b.ToTable("AcessorioOpcional");
                 });
 
             modelBuilder.Entity("CrudProduto.Models.FichaTecnica", b =>
@@ -149,15 +169,18 @@ namespace CrudProduto.Migrations
                     b.ToTable("Usuario");
                 });
 
-            modelBuilder.Entity("CrudProduto.Models.Acessorio", b =>
+            modelBuilder.Entity("CrudProduto.Models.AcessorioBasico", b =>
                 {
-                    b.HasOne("CrudProduto.Models.LinhaProduto")
+                    b.HasOne("CrudProduto.Models.LinhaProduto", "linhaProduto")
                         .WithMany("acessorios")
-                        .HasForeignKey("LinhaProdutoid");
+                        .HasForeignKey("linhaProdutoid");
+                });
 
-                    b.HasOne("CrudProduto.Models.Produto")
+            modelBuilder.Entity("CrudProduto.Models.AcessorioOpcional", b =>
+                {
+                    b.HasOne("CrudProduto.Models.Produto", "produto")
                         .WithMany("acessorios")
-                        .HasForeignKey("Produtoid");
+                        .HasForeignKey("produtoid");
                 });
 
             modelBuilder.Entity("CrudProduto.Models.Produto", b =>
