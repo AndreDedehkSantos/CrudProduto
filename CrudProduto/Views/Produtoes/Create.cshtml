@@ -1,58 +1,62 @@
-﻿@model CrudProduto.Models.Produto
+﻿@model CrudProduto.Models.ViewModels.ProdutoViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Novo</h2>
 
 <h4>Produto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="nome" class="control-label"></label>
-                <input asp-for="nome" class="form-control" />
-                <span asp-validation-for="nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="valorCompra" class="control-label"></label>
-                <input asp-for="valorCompra" class="form-control" />
-                <span asp-validation-for="valorCompra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dataCompra" class="control-label"></label>
-                <input asp-for="dataCompra" class="form-control" />
-                <span asp-validation-for="dataCompra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="quantidade" class="control-label"></label>
-                <input asp-for="quantidade" class="form-control" />
-                <span asp-validation-for="quantidade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="comprador" class="control-label"></label>
-                <input asp-for="comprador" class="form-control" />
-                <span asp-validation-for="comprador" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="status" /> @Html.DisplayNameFor(model => model.status)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				*<label asp-for="produto.linhaprodutoid" class="control-label"></label>
+				<select asp-for="produto.linhaprodutoid" asp-items="@(new SelectList(Model.lp,"id","nome"))" class="form-control"></select>
+			</div>
+			<div class="form-group">
+				*<label asp-for="produto.nome" class="control-label"></label>
+				<input asp-for="produto.nome" class="form-control" />
+				<span asp-validation-for="produto.nome" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				*<label asp-for="produto.valorCompra" class="control-label"></label>
+				<input asp-for="produto.valorCompra" class="form-control" />
+				<span asp-validation-for="produto.valorCompra" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				*<label asp-for="produto.dataCompra" class="control-label"></label>
+				<input asp-for="produto.dataCompra" class="form-control" />
+				<span asp-validation-for="produto.dataCompra" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				*<label asp-for="produto.quantidade" class="control-label"></label>
+				<input asp-for="produto.quantidade" class="form-control" />
+				<span asp-validation-for="produto.quantidade" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				*<label asp-for="produto.comprador" class="control-label"></label>
+				<input asp-for="produto.comprador" class="form-control" />
+				<span asp-validation-for="produto.comprador" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input asp-for="produto.status" /> @Html.DisplayNameFor(model => model.produto.status)
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-primary">Voltar</a>
 </div>
 
 @section Scripts {

@@ -3,14 +3,16 @@ using System;
 using CrudProduto.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CrudProduto.Migrations
 {
     [DbContext(typeof(CrudProdutoContext))]
-    partial class CrudProdutoContextModelSnapshot : ModelSnapshot
+    [Migration("20200629195620_MoreOneM")]
+    partial class MoreOneM
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CrudProduto.Models;
+using CrudProduto.Bussiness.Services;
+using CrudProduto.Models.ViewModels;
 
 namespace CrudProduto.Controllers
 {
@@ -45,7 +47,10 @@ namespace CrudProduto.Controllers
         // GET: Produtoes/Create
         public IActionResult Create()
         {
-            return View();
+            LinhaProdutoDal lpService = new LinhaProdutoDal(_context);
+            var linhas = lpService.Listar();
+            var viewModel = new ProdutoViewModel{ lp = linhas};
+            return View(viewModel);
         }
 
         // POST: Produtoes/Create
@@ -53,7 +58,7 @@ namespace CrudProduto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("nome,valorCompra,dataCompra,quantidade,comprador,status,id,descLog")] Produto produto)
+        public async Task<IActionResult> Create(Produto produto)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +90,7 @@ namespace CrudProduto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("nome,valorCompra,dataCompra,quantidade,comprador,status,id,descLog")] Produto produto)
+        public async Task<IActionResult> Edit(int id, [Bind("nome,valorCompra,dataCompra,quantidade,comprador,status,id")] Produto produto)
         {
             if (id != produto.id)
             {

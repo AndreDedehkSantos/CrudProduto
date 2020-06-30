@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using CrudProduto.Models;
+using CrudProduto.Bussiness.Services;
+using CrudProduto.Models.ViewModels;
+using CrudProduto.Dal;
 
 namespace CrudProduto
 {
@@ -39,6 +42,9 @@ namespace CrudProduto
 		    services.AddDbContext<CrudProdutoContext>(options =>
 					options.UseMySql(Configuration.GetConnectionString("CrudProdutoContext"), builder =>
 						builder.MigrationsAssembly("CrudProduto")));
+
+			services.AddScoped<ProdutoDal>();
+			services.AddScoped<LinhaProdutoDal>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
