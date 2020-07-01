@@ -20,7 +20,7 @@ namespace CrudProduto.Dal
 			return _context.Produto.ToList();
 		}
 
-		public void Inserir(LinhaProduto obj)
+		public void Inserir(Produto obj)
 		{
 			_context.Add(obj);
 			_context.SaveChanges();

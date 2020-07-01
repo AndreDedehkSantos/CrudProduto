@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CrudProduto.Models;
 using CrudProduto.Bussiness.Services;
 using CrudProduto.Models.ViewModels;
+using CrudProduto.Controllers.Fachada;
 
 namespace CrudProduto.Controllers
 {
@@ -47,6 +48,7 @@ namespace CrudProduto.Controllers
         // GET: Produtoes/Create
         public IActionResult Create()
         {
+
             LinhaProdutoDal lpService = new LinhaProdutoDal(_context);
             var linhas = lpService.Listar();
             var viewModel = new ProdutoViewModel{ lp = linhas};
@@ -62,8 +64,8 @@ namespace CrudProduto.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(produto);
-                await _context.SaveChangesAsync();
+                ProdutoFachada produtoFachada = new ProdutoFachada(_context);
+                produtoFachada.salvar(produto);
                 return RedirectToAction(nameof(Index));
             }
             return View(produto);
