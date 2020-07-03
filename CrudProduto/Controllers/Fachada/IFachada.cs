@@ -8,9 +8,9 @@ namespace CrudProduto.Controllers.Fachada
 {
 	interface IFachada
 	{
-		void salvar(EntidadeDominio EntidadeDominio);
-		void alterar(EntidadeDominio EntidadeDominio);
-		void listar(EntidadeDominio EntidadeDominio);
-		void inativar(EntidadeDominio EntidadeDominio);
+		void salvar(EntidadeDominio entidadeDominio);
+		void alterar(EntidadeDominio entidadeDominio);
+		ICollection<EntidadeDominio> Listar();
+		void inativar(int id);
 	}
 }

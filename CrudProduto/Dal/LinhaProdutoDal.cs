@@ -1,4 +1,5 @@
-﻿using CrudProduto.Models;
+﻿using CrudProduto.Dal;
+using CrudProduto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CrudProduto.Bussiness.Services
 {
-	public class LinhaProdutoDal
+	public class LinhaProdutoDal:IDal
 	{
 		private readonly CrudProdutoContext _context;
 		
@@ -16,15 +17,34 @@ namespace CrudProduto.Bussiness.Services
 			_context = context;
 		}
 
-		public List<LinhaProduto> Listar()
+        public void Alterar(EntidadeDominio entidadeDominio)
+        {
+            
+        }
+
+        public void Inativar(int id)
+        {
+            
+        }
+
+        public ICollection<EntidadeDominio> Listar()
 		{
-			return _context.LinhaProduto.ToList();
+			ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
+			var lista = _context.LinhaProduto.ToList();
+			foreach (LinhaProduto item in lista)
+			{
+				listaEnt.Add((EntidadeDominio)item);
+			}
+			return listaEnt;
 		}
 
-		public void Inserir(LinhaProduto obj)
+		public void Salvar(EntidadeDominio entidadeDominio)
 		{
-			_context.Add(obj);
+			LinhaProduto linha = (LinhaProduto)entidadeDominio;
+			_context.Add(linha);
 			_context.SaveChanges();
 		}
-	}
+
+
+    }
 }

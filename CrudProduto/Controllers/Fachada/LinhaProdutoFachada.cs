@@ -17,26 +17,28 @@ namespace CrudProduto.Controllers.Fachada
 			_context = context;
 		}
 
-		public void alterar(EntidadeDominio EntidadeDominio)
+		public void alterar(EntidadeDominio entidadeDominio)
 		{
 			
 		}
 
-		public void inativar(EntidadeDominio EntidadeDominio)
+		public void inativar(int id)
 		{
 			
 		}
 
-		public void listar(EntidadeDominio EntidadeDominio)
+		public ICollection<EntidadeDominio> Listar()
 		{
-			
+			LinhaProdutoDal lpDal = new LinhaProdutoDal(_context);
+			ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
+			listaEnt = lpDal.Listar();
+			return listaEnt;
 		}
 
 		public void salvar(EntidadeDominio entidadeDominio)
 		{
-			LinhaProduto linhaProduto = (LinhaProduto)entidadeDominio;
 			LinhaProdutoDal lpDal = new LinhaProdutoDal(_context);
-			lpDal.Inserir(linhaProduto);
+			lpDal.Salvar(entidadeDominio);
 		}
 	}
 }

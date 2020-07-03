@@ -14,9 +14,10 @@ namespace CrudProduto.Models
 
 		}
 
-		public LinhaProduto(string nome)
+		public LinhaProduto(string nome, ICollection<Acessorio> acessorios)
 		{
 			this.nome = nome;
+			this.acessorios = acessorios;
 		}
 
 		public void AddAcessorio(Acessorio acessorio)

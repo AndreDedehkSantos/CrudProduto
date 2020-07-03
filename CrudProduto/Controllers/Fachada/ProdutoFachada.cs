@@ -21,21 +21,23 @@ namespace CrudProduto.Controllers.Fachada
 			
 		}
 
-		public void inativar(EntidadeDominio EntidadeDominio)
+		public void inativar(int id)
 		{
 			
 		}
 
-		public void listar(EntidadeDominio EntidadeDominio)
-		{
-			
-		}
-
-		public void salvar(EntidadeDominio EntidadeDominio)
-		{
-			Produto produto = (Produto)EntidadeDominio;
+        public ICollection<EntidadeDominio> Listar()
+        {
 			ProdutoDal pDAL = new ProdutoDal(_context);
-			pDAL.Inserir(produto);
+			ICollection<EntidadeDominio> lista = new List<EntidadeDominio>();
+			lista = pDAL.Listar();
+			return lista;
+        }
+
+        public void salvar(EntidadeDominio entidadeDominio)
+		{
+			ProdutoDal pDAL = new ProdutoDal(_context);
+			pDAL.Salvar(entidadeDominio);
 		}
 	}
 }

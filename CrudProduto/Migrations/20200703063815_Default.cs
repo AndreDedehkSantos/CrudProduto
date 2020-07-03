@@ -4,27 +4,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CrudProduto.Migrations
 {
-    public partial class OtherEntities : Migration
+    public partial class Default : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "descLog",
-                table: "AcessorioBasico",
-                nullable: true);
-
-            migrationBuilder.AddColumn<int>(
-                name: "linhaPrdoutoid",
-                table: "AcessorioBasico",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "FichaTecnica",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    descLog = table.Column<string>(nullable: true),
                     descricao = table.Column<string>(nullable: true),
                     componenteBasico = table.Column<string>(nullable: true),
                     componentePrimario = table.Column<string>(nullable: true),
@@ -43,7 +32,6 @@ namespace CrudProduto.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    descLog = table.Column<string>(nullable: true),
                     nome = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -57,7 +45,6 @@ namespace CrudProduto.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    descLog = table.Column<string>(nullable: true),
                     dataHora = table.Column<DateTime>(nullable: false),
                     idUsuario = table.Column<int>(nullable: false),
                     descricao = table.Column<string>(nullable: true)
@@ -73,7 +60,6 @@ namespace CrudProduto.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    descLog = table.Column<string>(nullable: true),
                     nome = table.Column<string>(nullable: true),
                     senha1 = table.Column<string>(nullable: true),
                     senha2 = table.Column<string>(nullable: true)
@@ -89,7 +75,6 @@ namespace CrudProduto.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    descLog = table.Column<string>(nullable: true),
                     nome = table.Column<string>(nullable: true),
                     valorCompra = table.Column<double>(nullable: false),
                     dataCompra = table.Column<DateTime>(nullable: false),
@@ -97,7 +82,7 @@ namespace CrudProduto.Migrations
                     comprador = table.Column<string>(nullable: true),
                     status = table.Column<bool>(nullable: false),
                     fichaTecnicaid = table.Column<int>(nullable: true),
-                    linhaProdutoid = table.Column<int>(nullable: true)
+                    linhaprodutoid = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,57 +94,51 @@ namespace CrudProduto.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Produto_LinhaProduto_linhaProdutoid",
-                        column: x => x.linhaProdutoid,
+                        name: "FK_Produto_LinhaProduto_linhaprodutoid",
+                        column: x => x.linhaprodutoid,
                         principalTable: "LinhaProduto",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AcessorioOpcional",
+                name: "Acessorio",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    descLog = table.Column<string>(nullable: true),
                     nome = table.Column<string>(nullable: true),
                     descricao = table.Column<string>(nullable: true),
                     quantidade = table.Column<int>(nullable: false),
-                    linhaPrdoutoid = table.Column<int>(nullable: true),
+                    LinhaProdutoid = table.Column<int>(nullable: true),
                     Produtoid = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AcessorioOpcional", x => x.id);
+                    table.PrimaryKey("PK_Acessorio", x => x.id);
                     table.ForeignKey(
-                        name: "FK_AcessorioOpcional_Produto_Produtoid",
-                        column: x => x.Produtoid,
-                        principalTable: "Produto",
+                        name: "FK_Acessorio_LinhaProduto_LinhaProdutoid",
+                        column: x => x.LinhaProdutoid,
+                        principalTable: "LinhaProduto",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AcessorioOpcional_LinhaProduto_linhaPrdoutoid",
-                        column: x => x.linhaPrdoutoid,
-                        principalTable: "LinhaProduto",
+                        name: "FK_Acessorio_Produto_Produtoid",
+                        column: x => x.Produtoid,
+                        principalTable: "Produto",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AcessorioBasico_linhaPrdoutoid",
-                table: "AcessorioBasico",
-                column: "linhaPrdoutoid");
+                name: "IX_Acessorio_LinhaProdutoid",
+                table: "Acessorio",
+                column: "LinhaProdutoid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AcessorioOpcional_Produtoid",
-                table: "AcessorioOpcional",
+                name: "IX_Acessorio_Produtoid",
+                table: "Acessorio",
                 column: "Produtoid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AcessorioOpcional_linhaPrdoutoid",
-                table: "AcessorioOpcional",
-                column: "linhaPrdoutoid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Produto_fichaTecnicaid",
@@ -167,27 +146,15 @@ namespace CrudProduto.Migrations
                 column: "fichaTecnicaid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produto_linhaProdutoid",
+                name: "IX_Produto_linhaprodutoid",
                 table: "Produto",
-                column: "linhaProdutoid");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AcessorioBasico_LinhaProduto_linhaPrdoutoid",
-                table: "AcessorioBasico",
-                column: "linhaPrdoutoid",
-                principalTable: "LinhaProduto",
-                principalColumn: "id",
-                onDelete: ReferentialAction.Restrict);
+                column: "linhaprodutoid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_AcessorioBasico_LinhaProduto_linhaPrdoutoid",
-                table: "AcessorioBasico");
-
             migrationBuilder.DropTable(
-                name: "AcessorioOpcional");
+                name: "Acessorio");
 
             migrationBuilder.DropTable(
                 name: "Log");
@@ -203,18 +170,6 @@ namespace CrudProduto.Migrations
 
             migrationBuilder.DropTable(
                 name: "LinhaProduto");
-
-            migrationBuilder.DropIndex(
-                name: "IX_AcessorioBasico_linhaPrdoutoid",
-                table: "AcessorioBasico");
-
-            migrationBuilder.DropColumn(
-                name: "descLog",
-                table: "AcessorioBasico");
-
-            migrationBuilder.DropColumn(
-                name: "linhaPrdoutoid",
-                table: "AcessorioBasico");
         }
     }
 }

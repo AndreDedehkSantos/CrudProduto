@@ -1,5 +1,4 @@
 ﻿using CrudProduto.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace CrudProduto.Dal
 {
-	public class ProdutoDal : IDal
-	{
-		private readonly CrudProdutoContext _context;
+    public class AcessorioDal : IDal
+    {
+        private readonly CrudProdutoContext _context;
 
-		public ProdutoDal(CrudProdutoContext context)
-		{
-			_context = context;
-		}
+        public AcessorioDal(CrudProdutoContext context)
+        {
+            _context = context;
+        }
 
         public void Alterar(EntidadeDominio entidadeDominio)
         {
-            
+           
         }
 
         public void Inativar(int id)
@@ -29,8 +28,8 @@ namespace CrudProduto.Dal
         public ICollection<EntidadeDominio> Listar()
         {
             ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
-            var lista = _context.Produto.ToList();
-            foreach(Produto item in lista)
+            var lista = _context.Acessorio.ToList();
+            foreach (Acessorio item in lista)
             {
                 listaEnt.Add((EntidadeDominio)item);
             }
@@ -38,10 +37,10 @@ namespace CrudProduto.Dal
         }
 
         public void Salvar(EntidadeDominio entidadeDominio)
-		{
-            Produto produto = (Produto)entidadeDominio;
-			_context.Add(produto);
-			_context.SaveChanges();
-		}
+        {
+            Acessorio acessorio = (Acessorio)entidadeDominio;
+            _context.Add<Acessorio>(acessorio);
+            _context.SaveChanges();
+        }
     }
 }

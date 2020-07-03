@@ -24,7 +24,15 @@ namespace CrudProduto.Controllers
         // GET: Produtoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Produto.ToListAsync());
+            ProdutoFachada pFachada = new ProdutoFachada(_context);
+            ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
+            listaEnt = pFachada.Listar();
+            ICollection<Produto> lista = new List<Produto>();
+            foreach(EntidadeDominio item in listaEnt)
+            {
+                lista.Add((Produto)item);
+            }
+            return View(lista);
         }
 
         // GET: Produtoes/Details/5
@@ -48,9 +56,15 @@ namespace CrudProduto.Controllers
         // GET: Produtoes/Create
         public IActionResult Create()
         {
-
-            LinhaProdutoDal lpService = new LinhaProdutoDal(_context);
-            var linhas = lpService.Listar();
+            LinhaProdutoFachada lpFachada = new LinhaProdutoFachada(_context);
+            ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
+            ICollection<LinhaProduto> lista = new List<LinhaProduto>();
+            listaEnt = lpFachada.Listar();
+            foreach(EntidadeDominio item in listaEnt)
+            {
+                lista.Add((LinhaProduto)item);
+            }
+            var linhas = lista;
             var viewModel = new ProdutoViewModel{ lp = linhas};
             return View(viewModel);
         }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrudProduto.Migrations
 {
     [DbContext(typeof(CrudProdutoContext))]
-    [Migration("20200629195620_MoreOneM")]
-    partial class MoreOneM
+    [Migration("20200703063815_Default")]
+    partial class Default
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,7 +104,7 @@ namespace CrudProduto.Migrations
 
                     b.Property<int?>("fichaTecnicaid");
 
-                    b.Property<int?>("linhaProdutoid");
+                    b.Property<int>("linhaprodutoid");
 
                     b.Property<string>("nome");
 
@@ -118,7 +118,7 @@ namespace CrudProduto.Migrations
 
                     b.HasIndex("fichaTecnicaid");
 
-                    b.HasIndex("linhaProdutoid");
+                    b.HasIndex("linhaprodutoid");
 
                     b.ToTable("Produto");
                 });
@@ -158,7 +158,8 @@ namespace CrudProduto.Migrations
 
                     b.HasOne("CrudProduto.Models.LinhaProduto", "linhaProduto")
                         .WithMany()
-                        .HasForeignKey("linhaProdutoid");
+                        .HasForeignKey("linhaprodutoid")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
