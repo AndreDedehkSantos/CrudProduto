@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CrudProduto.Models;
+using CrudProduto.Controllers.Fachada;
+using CrudProduto.Dal;
 
 namespace CrudProduto.Controllers
 {
@@ -30,7 +32,7 @@ namespace CrudProduto.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("descricao,componenteBasico,componentePrimario,componenteSecundario,categoria,observacoes,subCategoria,id")] FichaTecnica fichaTecnica)
+        public async Task<IActionResult> Edit(int id, FichaTecnica fichaTecnica)
         {
             if (id != fichaTecnica.id)
             {
@@ -39,9 +41,19 @@ namespace CrudProduto.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                try 
                 {
-                    
+                    FichaTecnicaFachada fichaFachada = new FichaTecnicaFachada(_context);
+                    ICollection<string> validacoes = new List<string>();
+                    validacoes = fichaFachada.ValidarFicha(fichaTecnica);
+                    if(validacoes.Count() == 0)
+                    {
+                        fichaFachada.alterar(fichaTecnica);
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
                     _context.Update(fichaTecnica);
                     await _context.SaveChangesAsync();
                 }

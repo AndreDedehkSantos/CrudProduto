@@ -37,13 +37,10 @@ namespace CrudProduto.Controllers
         }
 
         // GET: Produtoes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+            ProdutoFachada produtoFachada = new ProdutoFachada(_context);
+            produtoFachada.Consultar(id);
             var produto = await _context.Produto
                 .FirstOrDefaultAsync(m => m.id == id);
             if (produto == null)

@@ -1,4 +1,5 @@
 ﻿using CrudProduto.Models;
+using Microsoft.AspNetCore.JsonPatch.Internal;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -38,10 +39,10 @@ namespace CrudProduto.Dal
             }
             return listaEnt;
         }
-
+        
         public Produto Consultar(int id)
         {
-            return _context.Produto.Find(id);
+             return _context.Produto.Include(Obj => Obj.fichaTecnica).FirstOrDefault(Obj => Obj.id == id); 
         }
 
         public void Salvar(EntidadeDominio entidadeDominio)
