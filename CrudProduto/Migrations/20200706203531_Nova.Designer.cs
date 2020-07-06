@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrudProduto.Migrations
 {
     [DbContext(typeof(CrudProdutoContext))]
-    [Migration("20200703063815_Default")]
-    partial class Default
+    [Migration("20200706203531_Nova")]
+    partial class Nova
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,16 +19,14 @@ namespace CrudProduto.Migrations
                 .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("CrudProduto.Models.Acessorio", b =>
+            modelBuilder.Entity("CrudProduto.Models.AcessorioBasico", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("LinhaProdutoid");
-
-                    b.Property<int?>("Produtoid");
-
                     b.Property<string>("descricao");
+
+                    b.Property<int>("linhaprodutoId");
 
                     b.Property<string>("nome");
 
@@ -36,11 +34,25 @@ namespace CrudProduto.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("LinhaProdutoid");
+                    b.ToTable("AcessorioBasico");
+                });
 
-                    b.HasIndex("Produtoid");
+            modelBuilder.Entity("CrudProduto.Models.AcessorioOpcional", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd();
 
-                    b.ToTable("Acessorio");
+                    b.Property<string>("descricao");
+
+                    b.Property<string>("nome");
+
+                    b.Property<int>("produtoId");
+
+                    b.Property<int>("quantidade");
+
+                    b.HasKey("id");
+
+                    b.ToTable("AcessorioOpcional");
                 });
 
             modelBuilder.Entity("CrudProduto.Models.FichaTecnica", b =>
@@ -57,6 +69,8 @@ namespace CrudProduto.Migrations
                     b.Property<string>("componenteSecundario");
 
                     b.Property<string>("descricao");
+
+                    b.Property<string>("observacoes");
 
                     b.Property<string>("subCategoria");
 
@@ -104,7 +118,7 @@ namespace CrudProduto.Migrations
 
                     b.Property<int?>("fichaTecnicaid");
 
-                    b.Property<int>("linhaprodutoid");
+                    b.Property<int>("linhaProdutoid");
 
                     b.Property<string>("nome");
 
@@ -118,7 +132,7 @@ namespace CrudProduto.Migrations
 
                     b.HasIndex("fichaTecnicaid");
 
-                    b.HasIndex("linhaprodutoid");
+                    b.HasIndex("linhaProdutoid");
 
                     b.ToTable("Produto");
                 });
@@ -139,17 +153,6 @@ namespace CrudProduto.Migrations
                     b.ToTable("Usuario");
                 });
 
-            modelBuilder.Entity("CrudProduto.Models.Acessorio", b =>
-                {
-                    b.HasOne("CrudProduto.Models.LinhaProduto")
-                        .WithMany("acessorios")
-                        .HasForeignKey("LinhaProdutoid");
-
-                    b.HasOne("CrudProduto.Models.Produto")
-                        .WithMany("acessorios")
-                        .HasForeignKey("Produtoid");
-                });
-
             modelBuilder.Entity("CrudProduto.Models.Produto", b =>
                 {
                     b.HasOne("CrudProduto.Models.FichaTecnica", "fichaTecnica")
@@ -158,7 +161,7 @@ namespace CrudProduto.Migrations
 
                     b.HasOne("CrudProduto.Models.LinhaProduto", "linhaProduto")
                         .WithMany()
-                        .HasForeignKey("linhaprodutoid")
+                        .HasForeignKey("linhaProdutoid")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

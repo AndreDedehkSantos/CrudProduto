@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CrudProduto.Bussiness;
 using CrudProduto.Bussiness.Services;
 using CrudProduto.Controllers.Fachada;
+using CrudProduto.Dal;
 using CrudProduto.Models;
 using CrudProduto.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -20,30 +22,36 @@ namespace CrudProduto.Controllers
 			_context = context;
 		}
 
+
+		public IActionResult Index()
+		{
+			return RedirectToAction("Index", "Produtoes");
+		}
+
 		[HttpGet]
 		public IActionResult Create()
         {
-			AcessorioFachada aFachada = new AcessorioFachada(_context);
-			ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
-			ICollection<Acessorio> lista = new List<Acessorio>();
-			listaEnt = aFachada.Listar();
-			foreach (EntidadeDominio item in listaEnt)
-			{
-				lista.Add((Acessorio)item);
-			}
-			ICollection<Acessorio> acessorios = lista;
-			var viewModel = new LinhaProdutoViewModel { acessorios = acessorios};
-			return View(viewModel);
+			return View();
         }
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Create(LinhaProdutoViewModel linha)
+		public IActionResult Create(LinhaProduto linha)
 		{
-			LinhaProduto linhaProduto = new LinhaProduto(linha.linhaProduto.nome, linha.acessorios);
+			LinhaProduto linhaProduto = new LinhaProduto(linha.nome);
 			LinhaProdutoFachada lpFachada = new LinhaProdutoFachada(_context);
-			lpFachada.salvar(linhaProduto);
-			return RedirectToAction("Index", "Home");
+			ICollection<string> validacoes = new List<string>();
+			validacoes = lpFachada.ValidarLinha(linha);
+			if(validacoes.Count() == 0)
+            {
+				lpFachada.salvar(linhaProduto);
+				return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+				return View("Error", validacoes);
+            }
+			
 		}
 	}
 }

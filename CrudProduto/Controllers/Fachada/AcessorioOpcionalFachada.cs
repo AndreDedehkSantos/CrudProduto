@@ -1,6 +1,6 @@
-﻿using CrudProduto.Dal;
+﻿using CrudProduto.Bussiness;
+using CrudProduto.Dal;
 using CrudProduto.Models;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +8,14 @@ using System.Threading.Tasks;
 
 namespace CrudProduto.Controllers.Fachada
 {
-    public class AcessorioFachada : IFachada
+    public class AcessorioOpcionalFachada : IFachada
     {
-
         private readonly CrudProdutoContext _context;
 
-        public AcessorioFachada(CrudProdutoContext context)
+        public AcessorioOpcionalFachada(CrudProdutoContext context)
         {
             _context = context;
         }
-
         public void alterar(EntidadeDominio entidadeDominio)
         {
             
@@ -25,21 +23,25 @@ namespace CrudProduto.Controllers.Fachada
 
         public void inativar(int id)
         {
-            throw new NotImplementedException();
+           
         }
 
         public ICollection<EntidadeDominio> Listar()
         {
-            AcessorioDal lpDal = new AcessorioDal(_context);
-            ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
-            listaEnt = lpDal.Listar();
-            return listaEnt;
+            return null;
         }
 
         public void salvar(EntidadeDominio entidadeDominio)
         {
-            AcessorioDal aDal = new AcessorioDal(_context);
+            AcessorioOpcionalDal aDal = new AcessorioOpcionalDal(_context);
             aDal.Salvar(entidadeDominio);
+        }
+
+        public ICollection<string> ValidarAcessorioOpcional(Acessorio acessorio)
+        {
+            ValidarDadosAcessorioOpcional vAcessorio = new ValidarDadosAcessorioOpcional();
+            ICollection<string> validacoes = vAcessorio.processar(acessorio);
+            return validacoes;
         }
     }
 }

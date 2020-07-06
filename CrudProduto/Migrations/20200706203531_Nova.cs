@@ -4,10 +4,42 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CrudProduto.Migrations
 {
-    public partial class Default : Migration
+    public partial class Nova : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AcessorioBasico",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nome = table.Column<string>(nullable: true),
+                    descricao = table.Column<string>(nullable: true),
+                    quantidade = table.Column<int>(nullable: false),
+                    linhaprodutoId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AcessorioBasico", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AcessorioOpcional",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nome = table.Column<string>(nullable: true),
+                    descricao = table.Column<string>(nullable: true),
+                    quantidade = table.Column<int>(nullable: false),
+                    produtoId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AcessorioOpcional", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "FichaTecnica",
                 columns: table => new
@@ -19,6 +51,7 @@ namespace CrudProduto.Migrations
                     componentePrimario = table.Column<string>(nullable: true),
                     componenteSecundario = table.Column<string>(nullable: true),
                     categoria = table.Column<string>(nullable: true),
+                    observacoes = table.Column<string>(nullable: true),
                     subCategoria = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -82,7 +115,7 @@ namespace CrudProduto.Migrations
                     comprador = table.Column<string>(nullable: true),
                     status = table.Column<bool>(nullable: false),
                     fichaTecnicaid = table.Column<int>(nullable: true),
-                    linhaprodutoid = table.Column<int>(nullable: false)
+                    linhaProdutoid = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,51 +127,12 @@ namespace CrudProduto.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Produto_LinhaProduto_linhaprodutoid",
-                        column: x => x.linhaprodutoid,
+                        name: "FK_Produto_LinhaProduto_linhaProdutoid",
+                        column: x => x.linhaProdutoid,
                         principalTable: "LinhaProduto",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Acessorio",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nome = table.Column<string>(nullable: true),
-                    descricao = table.Column<string>(nullable: true),
-                    quantidade = table.Column<int>(nullable: false),
-                    LinhaProdutoid = table.Column<int>(nullable: true),
-                    Produtoid = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Acessorio", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Acessorio_LinhaProduto_LinhaProdutoid",
-                        column: x => x.LinhaProdutoid,
-                        principalTable: "LinhaProduto",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Acessorio_Produto_Produtoid",
-                        column: x => x.Produtoid,
-                        principalTable: "Produto",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Acessorio_LinhaProdutoid",
-                table: "Acessorio",
-                column: "LinhaProdutoid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Acessorio_Produtoid",
-                table: "Acessorio",
-                column: "Produtoid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Produto_fichaTecnicaid",
@@ -146,24 +140,27 @@ namespace CrudProduto.Migrations
                 column: "fichaTecnicaid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produto_linhaprodutoid",
+                name: "IX_Produto_linhaProdutoid",
                 table: "Produto",
-                column: "linhaprodutoid");
+                column: "linhaProdutoid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Acessorio");
+                name: "AcessorioBasico");
+
+            migrationBuilder.DropTable(
+                name: "AcessorioOpcional");
 
             migrationBuilder.DropTable(
                 name: "Log");
 
             migrationBuilder.DropTable(
-                name: "Usuario");
+                name: "Produto");
 
             migrationBuilder.DropTable(
-                name: "Produto");
+                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "FichaTecnica");

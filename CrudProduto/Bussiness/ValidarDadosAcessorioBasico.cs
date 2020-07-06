@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace CrudProduto.Bussiness
 {
-	public class ValidarDadosAcessorio : IStrategy
+	public class ValidarDadosAcessorioBasico : IStrategy
 	{
 		public ICollection<string> processar(EntidadeDominio a)
 		{
 			ICollection<string> erro = new List<string>();
-			Acessorio acessorio = (Acessorio)a;
+			AcessorioBasico acessorio = (AcessorioBasico)a;
 			if(acessorio.nome == null)
 			{
 				erro.Add("Nome do Acessório Inválido");
@@ -24,6 +24,10 @@ namespace CrudProduto.Bussiness
 			{
 				erro.Add("Quantidade Inválida");
 			}
+			if(acessorio.linhaprodutoId == 0)
+            {
+				erro.Add("Selecione uma Linha de Produtos");
+            }
 			return erro;
 		}
 	}

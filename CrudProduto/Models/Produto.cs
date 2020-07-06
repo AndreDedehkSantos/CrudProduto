@@ -20,10 +20,10 @@ namespace CrudProduto.Models
 		[Display(Name = "Status")]
 		public bool status { get; set; }
 		public FichaTecnica fichaTecnica { get; set; }
+		[Display(Name = "Linha do Produto")]
+		public int linhaProdutoid { get; set; }
 		public LinhaProduto linhaProduto { get; set; }
-		[Display(Name ="Linha Produto")]
-		public int linhaprodutoid { get; set; }
-		public ICollection<Acessorio> acessorios { get; set; } = new List<Acessorio>();
+
 
 		public Produto()
 		{
@@ -39,16 +39,6 @@ namespace CrudProduto.Models
 			this.comprador = comprador;
 			this.status = status;
 			this.fichaTecnica = fichaTecnica;
-		}
-
-		public void AddAcessorio(Acessorio acessorio)
-		{
-			acessorios.Add(acessorio);
-		}
-
-		public void RemoveAcessorios(Acessorio acessorio)
-		{
-			acessorios.Remove(acessorio);
 		}
 	}
 }

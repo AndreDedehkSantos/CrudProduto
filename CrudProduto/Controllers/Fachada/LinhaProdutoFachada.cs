@@ -40,5 +40,12 @@ namespace CrudProduto.Controllers.Fachada
 			LinhaProdutoDal lpDal = new LinhaProdutoDal(_context);
 			lpDal.Salvar(entidadeDominio);
 		}
+
+		public ICollection<string> ValidarLinha(LinhaProduto linhaProduto)
+		{
+			ValidarDadosLinhaProduto vLinha = new ValidarDadosLinhaProduto();
+			ICollection<string> validacoes = vLinha.processar(linhaProduto);
+			return validacoes;
+		}
 	}
 }

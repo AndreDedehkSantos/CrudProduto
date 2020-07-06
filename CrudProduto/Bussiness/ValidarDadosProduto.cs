@@ -32,7 +32,7 @@ namespace CrudProduto.Bussiness
 			{
 				erro.Add("Valor da compra do Porduto Inválido");
 			}
-			if(produto.linhaProduto == null)
+			if(produto.linhaProdutoid == 0)
 			{
 				erro.Add("Selecione uma Linha de Produtos");
 			}

@@ -1,4 +1,5 @@
-﻿using CrudProduto.Dal;
+﻿using CrudProduto.Bussiness;
+using CrudProduto.Dal;
 using CrudProduto.Models;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,10 @@ namespace CrudProduto.Controllers.Fachada
 			_context = context;
 		}
 
-		public void alterar(EntidadeDominio EntidadeDominio)
+		public void alterar(EntidadeDominio entidadeDominio)
 		{
-			
+			ProdutoDal pDal = new ProdutoDal(_context);
+			pDal.Alterar(entidadeDominio);
 		}
 
 		public void inativar(int id)
@@ -38,6 +40,18 @@ namespace CrudProduto.Controllers.Fachada
 		{
 			ProdutoDal pDAL = new ProdutoDal(_context);
 			pDAL.Salvar(entidadeDominio);
+		}
+
+		public Produto Consultar(int id)
+		{
+			ProdutoDal pDAL = new ProdutoDal(_context);
+			return pDAL.Consultar(id);
+		}
+		public ICollection<string> ValidarProduto(Produto produto)
+		{
+			ValidarDadosProduto vProduto = new ValidarDadosProduto();
+			ICollection<string> validacoes = vProduto.processar(produto);
+			return validacoes;
 		}
 	}
 }

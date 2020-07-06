@@ -9,6 +9,7 @@ using CrudProduto.Models;
 using CrudProduto.Bussiness.Services;
 using CrudProduto.Models.ViewModels;
 using CrudProduto.Controllers.Fachada;
+using System.Numerics;
 
 namespace CrudProduto.Controllers
 {
@@ -69,105 +70,70 @@ namespace CrudProduto.Controllers
             return View(viewModel);
         }
 
-        // POST: Produtoes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Produto produto)
         {
             if (ModelState.IsValid)
             {
+                produto.status = true;
                 ProdutoFachada produtoFachada = new ProdutoFachada(_context);
-                produtoFachada.salvar(produto);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(produto);
-        }
-
-        // GET: Produtoes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var produto = await _context.Produto.FindAsync(id);
-            if (produto == null)
-            {
-                return NotFound();
-            }
-            return View(produto);
-        }
-
-        // POST: Produtoes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("nome,valorCompra,dataCompra,quantidade,comprador,status,id")] Produto produto)
-        {
-            if (id != produto.id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                FichaTecnicaFachada fichaFachada = new FichaTecnicaFachada(_context);
+                ICollection<string> validacoes = produtoFachada.ValidarProduto(produto);
+                ICollection<string> validacoesFicha = fichaFachada.ValidarFicha(produto.fichaTecnica);
+                foreach (string item in validacoesFicha)
                 {
-                    _context.Update(produto);
-                    await _context.SaveChangesAsync();
+                    validacoes.Add(item);
                 }
-                catch (DbUpdateConcurrencyException)
+                if (validacoes.Count() == 0)
                 {
-                    if (!ProdutoExists(produto.id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    
+                    produtoFachada.salvar(produto);
                 }
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    return View("Error", validacoes);
+                }
+
+                
             }
-            return View(produto);
-        }
-
-        // GET: Produtoes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var produto = await _context.Produto
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (produto == null)
-            {
-                return NotFound();
-            }
-
-            return View(produto);
-        }
-
-        // POST: Produtoes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var produto = await _context.Produto.FindAsync(id);
-            _context.Produto.Remove(produto);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProdutoExists(int id)
+        // GET: Produtoes/Edit/5
+        public async Task<IActionResult> Editar(int? id)
         {
-            return _context.Produto.Any(e => e.id == id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+            LinhaProdutoFachada lpFachada = new LinhaProdutoFachada(_context);
+            ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
+            ICollection<LinhaProduto> lista = new List<LinhaProduto>();
+            listaEnt = lpFachada.Listar();
+            foreach (EntidadeDominio item in listaEnt)
+            {
+                lista.Add((LinhaProduto)item);
+            }
+            var linhas = lista;
+
+            ProdutoFachada produtoFachada = new ProdutoFachada(_context);
+            int ID = (int)id;
+            var p = produtoFachada.Consultar(ID);
+            if (p == null)
+            {
+                return NotFound();
+            }
+            ProdutoViewModel pVM = new ProdutoViewModel { produto = p,  lp = linhas};
+            return View(pVM);
         }
+
+   
+       public IActionResult EditFT(Produto p)
+        {
+            return RedirectToAction("Edit", "FichaTecnicas", p);
+        }
+
     }
 }

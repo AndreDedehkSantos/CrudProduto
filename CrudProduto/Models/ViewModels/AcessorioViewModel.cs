@@ -7,8 +7,12 @@ namespace CrudProduto.Models.ViewModels
 {
     public class AcessorioViewModel
     {
-        public ICollection<Acessorio> acessorios { get; set; }
-        public  ICollection<bool> ativo{ get; set; }
-        public bool basico { get; set; }
+        public AcessorioBasico acessorio { get; set; }
+
+        public ICollection<LinhaProduto> linhas { get; set; } = new List<LinhaProduto>();
+
+        public AcessorioOpcional acessorioO { get; set; }
+
+        public ICollection<Produto> produtos { get; set; } = new List<Produto>();
     }
 }

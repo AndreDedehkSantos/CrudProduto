@@ -18,7 +18,9 @@ namespace CrudProduto.Dal
 
         public void Alterar(EntidadeDominio entidadeDominio)
         {
-            
+            Produto produto = (Produto)entidadeDominio;
+            _context.Update(produto);
+            _context.SaveChangesAsync();
         }
 
         public void Inativar(int id)
@@ -29,7 +31,7 @@ namespace CrudProduto.Dal
         public ICollection<EntidadeDominio> Listar()
         {
             ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
-            var lista = _context.Produto.ToList();
+            ICollection<Produto> lista = _context.Produto.ToList();
             foreach(Produto item in lista)
             {
                 listaEnt.Add((EntidadeDominio)item);
@@ -37,10 +39,15 @@ namespace CrudProduto.Dal
             return listaEnt;
         }
 
+        public Produto Consultar(int id)
+        {
+            return _context.Produto.Find(id);
+        }
+
         public void Salvar(EntidadeDominio entidadeDominio)
 		{
             Produto produto = (Produto)entidadeDominio;
-			_context.Add(produto);
+			_context.Produto.Add(produto);
 			_context.SaveChanges();
 		}
     }

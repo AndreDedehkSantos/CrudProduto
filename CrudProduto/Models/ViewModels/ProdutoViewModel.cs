@@ -10,6 +10,9 @@ namespace CrudProduto.Models.ViewModels
 	public class ProdutoViewModel
 	{
 		public Produto produto { get; set; }
+
 		public ICollection<LinhaProduto> lp { get; set; }
-	}
+
+        public bool status { get; set; }
+    }
 }

@@ -45,7 +45,9 @@ namespace CrudProduto
 
 			services.AddScoped<ProdutoDal>();
 			services.AddScoped<LinhaProdutoDal>();
-			services.AddScoped<AcessorioDal>();
+			services.AddScoped<AcessorioBasicoDal>();
+			services.AddScoped<AcessorioOpcionalDal>();
+			services.AddScoped<FichaTecnicaDal>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CrudProduto.Dal;
 
 namespace CrudProduto.Dal
 {
-    public class AcessorioDal : IDal
+    public class AcessorioBasicoDal : IDal
     {
         private readonly CrudProdutoContext _context;
 
-        public AcessorioDal(CrudProdutoContext context)
+        public AcessorioBasicoDal(CrudProdutoContext context)
         {
             _context = context;
         }
@@ -28,7 +29,7 @@ namespace CrudProduto.Dal
         public ICollection<EntidadeDominio> Listar()
         {
             ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
-            var lista = _context.Acessorio.ToList();
+            var lista = _context.AcessorioBasico.ToList();
             foreach (Acessorio item in lista)
             {
                 listaEnt.Add((EntidadeDominio)item);
@@ -38,8 +39,8 @@ namespace CrudProduto.Dal
 
         public void Salvar(EntidadeDominio entidadeDominio)
         {
-            Acessorio acessorio = (Acessorio)entidadeDominio;
-            _context.Add<Acessorio>(acessorio);
+            AcessorioBasico acessorio = (AcessorioBasico)entidadeDominio;
+            _context.Add<AcessorioBasico>(acessorio);
             _context.SaveChanges();
         }
     }

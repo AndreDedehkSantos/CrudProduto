@@ -36,7 +36,7 @@ namespace CrudProduto.Bussiness
 			}
 			if(fichaTecnica.subCategoria == null)
 			{
-				erro.Add("SubCategoria Inválida");
+				erro.Add("Sub-categoria Inválida");
 			}
 			return erro;			
 		}
