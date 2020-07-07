@@ -21,11 +21,6 @@ namespace CrudProduto.Controllers.Fachada
         {
             
         }
-
-        public void inativar(int id)
-        {
-            
-        }
         public FichaTecnica find(FichaTecnica ficha)
         {
             FichaTecnicaDal fDal = new FichaTecnicaDal(_context);

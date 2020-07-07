@@ -8,18 +8,17 @@ using System.Threading.Tasks;
 
 namespace CrudProduto.Bussiness
 {
-	public class ValidarDadosUsuario : IStrategy
+	public class ValidarDadosUsuario 
 	{
-		public ICollection<string> processar(EntidadeDominio u)
+		public ICollection<string> processar(string nome, string senha1, string senha2)
 		{
-			Usuario usuario = (Usuario)u;
 			ICollection<string> erro = new List<string>();
-			if(usuario.nome == null)
+			if(nome == null)
 			{
 				erro.Add("Nome de usuário Inválido");
 			}
 		
-			ICollection<string> erroSenha = ValidarSenha(usuario.senha1, usuario.senha2);
+			ICollection<string> erroSenha = ValidarSenha(senha1, senha2);
 			if (erroSenha.Count != 0)
 			{
 				foreach(string item in erroSenha)
@@ -33,8 +32,54 @@ namespace CrudProduto.Bussiness
 		private ICollection<string> ValidarSenha(string senha1, string senha2)
 		{
 			ICollection<string> erroSenha = new List<string>();
-			var regexItem = new Regex("^[a-zA-Z ]*$");
-			if (senha1 == null || senha1.Length < 8 || !regexItem.IsMatch(senha1))
+			string validarLetrasMaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			string validarLetrasMinusculas = "abcdefghijklmnopqrstuvwxyz";
+			string validarNumeros = "0123456789";
+			string validarSimbolos = "'!@#$%¨&*-_+=/*,.(){}[]?!;:§|/";
+
+			bool vLMai = false;
+			bool vLMin = false;
+			bool vNum = false;
+			bool vSim = false;
+			
+			foreach (char item in senha1)
+			{
+				if (validarLetrasMaiusculas.Contains(item))
+				{
+					vLMai = true;
+				}
+			}
+
+			foreach (char item in senha1)
+			{
+				if (validarLetrasMinusculas.Contains(item))
+				{
+					vLMin = true;
+				}
+			}
+
+			foreach (char item in senha1)
+			{
+				if (validarNumeros.Contains(item))
+				{
+					vNum = true;
+				}
+			}
+
+			foreach (char item in senha1)
+			{
+				if (validarSimbolos.Contains(item))
+				{
+					vSim = true;
+				}
+			}
+
+			if (senha1.Length < 8 || !vLMai || !vLMin || !vNum || !vSim)
+
+			{
+				erroSenha.Add("Senha fraca");
+			}
+			if (senha1 == null) 
 			{
 				erroSenha.Add("Senha Inválida");
 			}
@@ -44,6 +89,5 @@ namespace CrudProduto.Bussiness
 			}
 			return erroSenha;
 		}
-
 	}
 }

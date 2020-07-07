@@ -7,27 +7,23 @@ using System.Threading.Tasks;
 
 namespace CrudProduto.Bussiness
 {
-	public class CliptografiaSenhaUsuario : IStrategy
+	public class CliptografiaSenhaUsuario 
 	{
-		public ICollection<string> processar(EntidadeDominio u)
+		public string processar(string senha)
 		{
-			Usuario usuario = (Usuario)u;
-			ICollection<string> senha = new List<string>();
-			senha.Add(CliptografadaSenha(usuario.senha1).ToString());
-			senha.Add(CliptografadaSenha(usuario.senha2).ToString());
+			senha = CliptografadaSenha(senha);
 			return senha;
 			
 		}
 
-		private StringBuilder CliptografadaSenha(string senha)
+		private string CliptografadaSenha(string senha)
 		{
-			char[] senha2 = new char[senha.Length];
 			StringBuilder senhaClip = new StringBuilder();
-			for(int i = senha2.Length; i >= 0; i--)
+			for(int i = senha.Length; i >= 0; i--)
 			{
-				senhaClip.Append(senha2[i].ToString());
+				senhaClip.Append(senha[i]);
 			}
-			return senhaClip;
+			return senhaClip.ToString();
 		}
 	}
 }

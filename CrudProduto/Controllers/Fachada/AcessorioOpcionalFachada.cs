@@ -20,17 +20,16 @@ namespace CrudProduto.Controllers.Fachada
         {
             
         }
-
-        public void inativar(int id)
-        {
-           
-        }
-
         public ICollection<EntidadeDominio> Listar()
         {
             return null;
         }
 
+        public ICollection<AcessorioOpcional> Consultar(int id)
+        {
+            AcessorioOpcionalDal aDal = new AcessorioOpcionalDal(_context);
+            return aDal.Consultar(id);
+        }
         public void salvar(EntidadeDominio entidadeDominio)
         {
             AcessorioOpcionalDal aDal = new AcessorioOpcionalDal(_context);

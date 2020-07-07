@@ -23,10 +23,10 @@ namespace CrudProduto.Controllers.Fachada
         {
             
         }
-
-        public void inativar(int id)
+        public ICollection<AcessorioBasico> Consultar(int id)
         {
-            
+            AcessorioBasicoDal aDal = new AcessorioBasicoDal(_context);
+            return aDal.Consultar(id);
         }
 
         public ICollection<EntidadeDominio> Listar()

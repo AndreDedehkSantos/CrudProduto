@@ -25,6 +25,7 @@ namespace CrudProduto.Controllers
         // GET: Produtoes
         public async Task<IActionResult> Index()
         {
+
             ProdutoFachada pFachada = new ProdutoFachada(_context);
             ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
             listaEnt = pFachada.Listar();
@@ -39,16 +40,24 @@ namespace CrudProduto.Controllers
         // GET: Produtoes/Details/5
         public async Task<IActionResult> Details(int id)
         {
+            
             ProdutoFachada produtoFachada = new ProdutoFachada(_context);
-            produtoFachada.Consultar(id);
-            var produto = await _context.Produto
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (produto == null)
+            Produto p = produtoFachada.Consultar(id);
+            LinhaProdutoFachada lpFachada = new LinhaProdutoFachada(_context);
+            LinhaProduto lp = lpFachada.Consultar(p.linhaProdutoid);
+            AcessorioOpcionalFachada acessorioOFachada = new AcessorioOpcionalFachada(_context);
+            AcessorioBasicoFachada acessorioBFachada = new AcessorioBasicoFachada(_context);
+            ICollection<AcessorioOpcional> listaAcessoriosO = new List<AcessorioOpcional>();
+            listaAcessoriosO = acessorioOFachada.Consultar(p.id);
+            ICollection<AcessorioBasico> listaAcessoriosB = new List<AcessorioBasico>();
+            listaAcessoriosB = acessorioBFachada.Consultar(p.linhaProdutoid);
+            ProdutoViewModel pVM = new ProdutoViewModel { produto = p, acessoriosO = listaAcessoriosO, acessoriosB = listaAcessoriosB, linha = lp };
+            if (p == null)
             {
                 return NotFound();
             }
 
-            return View(produto);
+            return View(pVM);
         }
 
         // GET: Produtoes/Create

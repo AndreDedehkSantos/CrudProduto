@@ -48,6 +48,7 @@ namespace CrudProduto
 			services.AddScoped<AcessorioBasicoDal>();
 			services.AddScoped<AcessorioOpcionalDal>();
 			services.AddScoped<FichaTecnicaDal>();
+			services.AddScoped<UsuarioDal>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,7 +72,7 @@ namespace CrudProduto
 			{
 				routes.MapRoute(
 					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}");
+					template: "{controller=Usuarios}/{action=Create}");
 			});
 		}
 	}

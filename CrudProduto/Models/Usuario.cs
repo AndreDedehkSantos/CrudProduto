@@ -1,21 +1,23 @@
-﻿namespace CrudProduto.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CrudProduto.Models
 {
 	public class Usuario : EntidadeDominio
 	{
+		[Display(Name = "Nome")]
 		public string nome { get; set; }
-		public string senha1 { get; set; }
-		public string senha2 { get; set; }
+		[Display(Name = "Senha")]
+		public string senha { get; set; }
+
 
 		public Usuario()
 		{
 
 		}
-
-		public Usuario(string nome, string senha1, string senha2)
+		public Usuario(string nome, string senha1, string senha)
 		{
 			this.nome = nome;
-			this.senha1 = senha1;
-			this.senha2 = senha2;
+			this.senha = senha;;
 		}
 	}
 }

@@ -12,7 +12,6 @@ namespace CrudProduto.Models
 		{
 
 		}
-
 		public LinhaProduto(string nome)
 		{
 			this.nome = nome;

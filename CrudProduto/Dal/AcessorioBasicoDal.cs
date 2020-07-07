@@ -26,6 +26,11 @@ namespace CrudProduto.Dal
             throw new NotImplementedException();
         }
 
+        public ICollection<AcessorioBasico> Consultar (int id)
+        {
+            return _context.AcessorioBasico.Where(x => x.linhaprodutoId == id).ToList();
+        }
+
         public ICollection<EntidadeDominio> Listar()
         {
             ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();

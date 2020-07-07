@@ -11,6 +11,12 @@ namespace CrudProduto.Models.ViewModels
 	{
 		public Produto produto { get; set; }
 
+		public LinhaProduto linha { get; set; }
+
+		public ICollection<AcessorioBasico> acessoriosB = new List<AcessorioBasico>();
+
+		public ICollection<AcessorioOpcional> acessoriosO = new List<AcessorioOpcional>();
+
 		public ICollection<LinhaProduto> lp { get; set; }
 
         public bool status { get; set; }

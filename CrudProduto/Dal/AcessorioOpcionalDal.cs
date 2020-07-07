@@ -24,7 +24,10 @@ namespace CrudProduto.Dal
         {
             
         }
-
+        public ICollection<AcessorioOpcional> Consultar(int id)
+        {
+            return _context.AcessorioOpcional.Where(x => x.produtoId == id).ToList();
+        }
         public ICollection<EntidadeDominio> Listar()
         {
             ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();

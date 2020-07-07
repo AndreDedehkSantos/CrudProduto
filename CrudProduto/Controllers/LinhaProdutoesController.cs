@@ -45,8 +45,8 @@ namespace CrudProduto.Controllers
 			if(validacoes.Count() == 0)
             {
 				lpFachada.salvar(linhaProduto);
-				return RedirectToAction("Index", "Home");
-            }
+				return RedirectToAction("Index", "Produtoes");
+			}
             else
             {
 				return View("Error", validacoes);

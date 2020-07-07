@@ -11,6 +11,5 @@ namespace CrudProduto.Controllers.Fachada
 		void salvar(EntidadeDominio entidadeDominio);
 		void alterar(EntidadeDominio entidadeDominio);
 		ICollection<EntidadeDominio> Listar();
-		void inativar(int id);
 	}
 }

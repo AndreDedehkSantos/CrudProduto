@@ -26,8 +26,12 @@ namespace CrudProduto.Bussiness.Services
         {
             
         }
+		public LinhaProduto Consultar(int id)
+		{
+			return _context.LinhaProduto.Find(id);
+		}
 
-        public ICollection<EntidadeDominio> Listar()
+		public ICollection<EntidadeDominio> Listar()
 		{
 			ICollection<EntidadeDominio> listaEnt = new List<EntidadeDominio>();
 			var lista = _context.LinhaProduto.ToList();

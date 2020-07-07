@@ -4,19 +4,19 @@ namespace CrudProduto.Models
 {
 	public class FichaTecnica : EntidadeDominio
 	{
-		[Display(Name = "*Descrição")]
+		[Display(Name = "Descrição")]
 		public string descricao { get; set; }
-		[Display(Name = "*Componente Básico")]
+		[Display(Name = "Componente Básico")]
 		public string componenteBasico { get; set; }
-		[Display(Name = "*Componente primário")]
+		[Display(Name = "Componente primário")]
 		public string componentePrimario { get; set; }
-		[Display(Name = "*Componente Secundário")]
+		[Display(Name = "Componente Secundário")]
 		public string componenteSecundario { get; set; }
-		[Display(Name = "*Categoria")]
+		[Display(Name = "Categoria")]
 		public string categoria { get; set; }
 		[Display(Name = "observações")]
 		public string observacoes { get; set; }
-		[Display(Name = "*Sub-Categoria")]
+		[Display(Name = "Sub-Categoria")]
 		public string subCategoria { get; set; }
 
         public FichaTecnica()

@@ -22,9 +22,10 @@ namespace CrudProduto.Controllers.Fachada
 			
 		}
 
-		public void inativar(int id)
+		public LinhaProduto Consultar(int id)
 		{
-			
+			LinhaProdutoDal pDAL = new LinhaProdutoDal(_context);
+			return pDAL.Consultar(id);
 		}
 
 		public ICollection<EntidadeDominio> Listar()

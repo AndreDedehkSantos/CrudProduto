@@ -49,7 +49,7 @@ namespace CrudProduto.Controllers
             if (validacoes.Count() == 0)
             {
                 acessorioFachada.salvar(acessorioVM.acessorioO);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Produtoes");
             }
             else
             {
