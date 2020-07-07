@@ -8,10 +8,10 @@ namespace CrudProduto.Bussiness
 {
 	public class GerarLog 
 	{
-		public Log Processar(string desc, int usuId, bool alt, bool ins, EntidadeDominio e)
+		public Log Processar(string desc, int usuId, bool alt, bool ins, string m)
 		{
-			DateTime dthora = new DateTime();
-			return new Log { descricao = desc, idUsuario = usuId, alteraco = alt, insercao = ins, dataHora = dthora, manter = e.ToString()};
+			DateTime dthora = DateTime.Now;
+			return new Log { descricao = desc, idUsuario = usuId, alteraco = alt, insercao = ins, dataHora = dthora, manter = m };
 
 		}
 	}

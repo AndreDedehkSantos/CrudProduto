@@ -16,5 +16,10 @@ namespace CrudProduto.Models
 		{
 			this.nome = nome;
 		}
-	}
+
+        public override string ToString()
+        {
+			return "Id: " + this.id.ToString() + " Nome: " + this.nome; 
+        }
+    }
 }

@@ -33,6 +33,12 @@ namespace CrudProduto.Models
 			this.categoria = categoria;
 			this.subCategoria = subCategoria;
 		}
-	}
+
+        public override string ToString()
+        {
+			return "Id: " + this.id.ToString() + " Descrição: " + this.descricao + " Componente Básico: " + this.componenteBasico + " Componente primário: " + this.componentePrimario
+				+ " Componente secundário: " + this.componenteSecundario + " Categoria: " + this.categoria + " Sub-categoria: " + this.subCategoria + " Observações: " + this.observacoes;
+        }
+    }
 
 }

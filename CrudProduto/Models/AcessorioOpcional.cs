@@ -10,6 +10,13 @@ namespace CrudProduto.Models
     {
         [Display(Name = "Produto")]
         public int produtoId { get; set; }
+
+        public override string ToString()
+        {
+            return "Id: " + this.id.ToString() + " Nome: " + this.nome + " Descrição: " + this.descricao + " Quantidade: " + this.quantidade + " Produto Id: " + this.produtoId;
+        }
     }
+    
+
 }
          

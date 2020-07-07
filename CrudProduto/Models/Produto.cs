@@ -39,5 +39,12 @@ namespace CrudProduto.Models
 			this.status = status;
 			this.fichaTecnica = fichaTecnica;
 		}
-	}
+
+        public override string ToString()
+        {
+			return "Id: " + this.id.ToString() + " Nome: " +  this.nome + " Valor da Compra: " + this.valorCompra.ToString() + " Quantidade: " + this.quantidade.ToString()
+					+ " Data da Compra: " + this.dataCompra.ToString() + " Quantidade: " + this.quantidade.ToString()
+					+ " Comprador: " + this.comprador + " Status: " + this.status.ToString() + " Linha de Produto Id: " + this.linhaProdutoid.ToString();
+        }
+    }
 }

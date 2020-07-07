@@ -101,7 +101,8 @@ namespace CrudProduto.Controllers
                         produtoFachada.salvar(produtoVM.produto);
                         LogFachada lFachada = new LogFachada(_context);
                         string descricao = "Inserção do Produto: " + produtoVM.produto.nome + ", Id: " + produtoVM.produto.id;
-                        Log log = lFachada.gerarLog(descricao, usuario.id, false, true, produtoVM.produto);
+                        Log log = lFachada.gerarLog(descricao, usuario.id, false, true, produtoVM.produto.ToString());
+                        lFachada.salvar(log);
                     }
                     else
                     {
@@ -163,7 +164,8 @@ namespace CrudProduto.Controllers
                     produtoFachada.salvar(produtoVM.produto);
                     LogFachada lFachada = new LogFachada(_context);
                     string descricao = "Alteração do Produto: " + produtoVM.produto.nome + ", Id: " + produtoVM.produto.id;
-                    Log log = lFachada.gerarLog(descricao, usuario.id, true, false, produtoVM.manter);
+                    Log log = lFachada.gerarLog(descricao, usuario.id, true, false, produtoVM.manter.ToString());
+                    lFachada.salvar(log);
                 }
                 else
                 {

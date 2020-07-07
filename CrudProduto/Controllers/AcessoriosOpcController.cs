@@ -55,7 +55,8 @@ namespace CrudProduto.Controllers
                     acessorioFachada.salvar(acessorioVM.acessorioO);
                     LogFachada lFachada = new LogFachada(_context);
                     string descricao = "Alteração da Ficha Técnica Id: " + acessorioVM.acessorioO.id;
-                    Log log = lFachada.gerarLog(descricao, usuario.id, true, false, acessorioVM.acessorioO);
+                    Log log = lFachada.gerarLog(descricao, usuario.id, true, false, acessorioVM.acessorioO.ToString());
+                    lFachada.salvar(log);
                     return RedirectToAction("Index", "Produtoes");
                 }
                 else

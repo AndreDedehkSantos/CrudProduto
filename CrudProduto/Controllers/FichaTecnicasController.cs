@@ -58,7 +58,8 @@ namespace CrudProduto.Controllers
                             fichaFachada.alterar(fichaTecnicaVM.ficha);
                             LogFachada lFachada = new LogFachada(_context);
                             string descricao = "Alteração da Ficha Técnica Id: " + fichaTecnicaVM.ficha.id;
-                            Log log = lFachada.gerarLog(descricao, usuario.id, true, false, fichaTecnicaVM.manter);
+                            Log log = lFachada.gerarLog(descricao, usuario.id, true, false, fichaTecnicaVM.manter.ToString());
+                            lFachada.salvar(log);
                         }
                         else
                         {

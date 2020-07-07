@@ -1,4 +1,5 @@
 ﻿using CrudProduto.Bussiness;
+using CrudProduto.Dal;
 using CrudProduto.Models;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,16 @@ namespace CrudProduto.Controllers.Fachada
             _context = context;
         }
 
-        public Log gerarLog(string descricao, int usuarioId, bool alt, bool ins, EntidadeDominio e)
+        public void salvar(Log log)
+        {
+            LogDal lDal = new LogDal(_context);
+            lDal.Salvar(log);
+        }
+
+        public Log gerarLog(string descricao, int usuarioId, bool alt, bool ins, string manter)
         {
             GerarLog gLog = new GerarLog();
-            return gLog.Processar(descricao, usuarioId, alt, ins, e);
+            return gLog.Processar(descricao, usuarioId, alt, ins, manter);
         }
     }
 }
