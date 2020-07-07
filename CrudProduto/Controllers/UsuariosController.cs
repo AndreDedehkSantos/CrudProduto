@@ -34,6 +34,7 @@ namespace CrudProduto.Controllers
             ICollection<string> validacoes = uFachada.Validarusuario(usuarioVM.nome, usuarioVM.senha1, usuarioVM.senha2);
             if(validacoes.Count() == 0)
             {
+                usuarioVM.senha1 = uFachada.cliptografar(usuarioVM.senha1);
                 Usuario usuario = new Usuario { nome = usuarioVM.nome, senha = usuarioVM.senha1 };
                 uFachada.Salvar(usuario);
                 return RedirectToAction("Index", "Produtoes");

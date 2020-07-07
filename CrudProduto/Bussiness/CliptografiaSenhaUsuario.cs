@@ -19,9 +19,10 @@ namespace CrudProduto.Bussiness
 		private string CliptografadaSenha(string senha)
 		{
 			StringBuilder senhaClip = new StringBuilder();
-			for(int i = senha.Length; i >= 0; i--)
+			char[] s = senha.ToArray();
+			for(int i = s.Length - 1; i >= 0; i--)
 			{
-				senhaClip.Append(senha[i]);
+				senhaClip.Append(s[i]);
 			}
 			return senhaClip.ToString();
 		}
