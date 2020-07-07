@@ -8,7 +8,8 @@ namespace CrudProduto.Models
 {
     public class AcessorioOpcional:Acessorio
     {
-        [Display(Name = "Linha de Produtos")]
+        [Display(Name = "Produto")]
         public int produtoId { get; set; }
     }
 }
+         

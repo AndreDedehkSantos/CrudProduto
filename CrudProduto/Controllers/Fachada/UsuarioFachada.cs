@@ -17,6 +17,12 @@ namespace CrudProduto.Controllers.Fachada
             _context = context;
         }
 
+        public Usuario existe(Usuario usuario)
+        {
+            UsuarioDal uDal = new UsuarioDal(_context);
+            return uDal.Existencia(usuario);
+        }
+
         public void Salvar(Usuario usuario)
         {
             UsuarioDal uDal = new UsuarioDal(_context);

@@ -28,5 +28,6 @@ namespace CrudProduto.Models
 
         public DbSet<Log> Log { get; set; }
 
+
     }
 }

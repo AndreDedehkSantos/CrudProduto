@@ -14,6 +14,19 @@ namespace CrudProduto.Dal
         {
             _context = context;
         }
+
+        public Usuario Existencia(Usuario usuario)
+        {
+            ICollection<Usuario> lista = _context.Usuario.ToList();
+            foreach(Usuario item in lista)
+            {
+                if (item.nome.Equals(usuario.nome))
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
         public void salvar(Usuario usuario)
         {
             _context.Usuario.Add(usuario);

@@ -52,6 +52,12 @@
             <div class="form-group">
                 <label>Itens com '*' são obrigatórios</label>
             </div>
+            <hr />Usuário
+            <div class="form-group">
+                 <b><label asp-for="usuario.nome" class="control-label"></label></b>
+                <input asp-for="usuario.nome" class="form-control" />
+                <span asp-validation-for="usuario.nome" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Concluído" class="btn btn-primary" />
             </div>

@@ -14,5 +14,8 @@ namespace CrudProduto.Models.ViewModels
         public AcessorioOpcional acessorioO { get; set; }
 
         public ICollection<Produto> produtos { get; set; } = new List<Produto>();
+
+        public Usuario usuario { get; set; }
+
     }
 }

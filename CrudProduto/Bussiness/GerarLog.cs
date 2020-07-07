@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace CrudProduto.Bussiness
 {
-	public class GerarLog : IStrategy
+	public class GerarLog 
 	{
-		public ICollection<string> processar(EntidadeDominio entidadeDominio)
+		public Log Processar(string desc, int usuId, bool alt, bool ins, EntidadeDominio e)
 		{
-			throw new NotImplementedException();
+			DateTime dthora = new DateTime();
+			return new Log { descricao = desc, idUsuario = usuId, alteraco = alt, insercao = ins, dataHora = dthora, manter = e.ToString()};
+
 		}
 	}
 }

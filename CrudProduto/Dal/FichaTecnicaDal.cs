@@ -32,9 +32,9 @@ namespace CrudProduto.Dal
             throw new NotImplementedException();
         }
 
-        public FichaTecnica find(FichaTecnica ficha)
+        public FichaTecnica find(int id)
         {
-            return _context.FichaTecnica.Find(ficha.id);
+            return _context.FichaTecnica.Find(id);
         }
 
         public void Salvar(EntidadeDominio entidadeDominio)

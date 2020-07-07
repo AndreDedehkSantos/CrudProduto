@@ -46,8 +46,21 @@ namespace CrudProduto.Controllers
             validacoes = acessorioFachada.ValidarAcessorioBasico(acessorioVM.acessorio);
             if(validacoes.Count() == 0)
             {
-                acessorioFachada.salvar(acessorioVM.acessorio);
-                return RedirectToAction("Index", "Produtoes");
+                UsuarioFachada uFachada = new UsuarioFachada(_context);
+                Usuario usuario = uFachada.existe(acessorioVM.usuario);
+                if (usuario != null)
+                {
+                    acessorioFachada.salvar(acessorioVM.acessorio);
+                    LogFachada lFachada = new LogFachada(_context);
+                    string descricao = "Alteração da Ficha Técnica Id: " + acessorioVM.acessorio.id;
+                    Log log = lFachada.gerarLog(descricao, usuario.id, true, false, acessorioVM.acessorio);
+                    return RedirectToAction("Index", "Produtoes");
+                }
+                else
+                {
+                    validacoes.Add("Usuário não encontrado");
+                    return View("Error", validacoes);
+                }
             }
             else
             {

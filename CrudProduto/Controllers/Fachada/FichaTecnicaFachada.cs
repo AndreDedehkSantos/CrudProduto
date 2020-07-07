@@ -21,10 +21,10 @@ namespace CrudProduto.Controllers.Fachada
         {
             
         }
-        public FichaTecnica find(FichaTecnica ficha)
+        public FichaTecnica find(int id)
         {
             FichaTecnicaDal fDal = new FichaTecnicaDal(_context);
-            return fDal.find(ficha);
+            return fDal.find(id);
 
         }
 

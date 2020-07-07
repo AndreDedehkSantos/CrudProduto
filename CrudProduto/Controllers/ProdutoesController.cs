@@ -79,23 +79,35 @@ namespace CrudProduto.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Produto produto)
+        public async Task<IActionResult> Create(ProdutoViewModel produtoVM)
         {
             if (ModelState.IsValid)
             {
-                produto.status = true;
+                produtoVM.produto.status = true;
                 ProdutoFachada produtoFachada = new ProdutoFachada(_context);
                 FichaTecnicaFachada fichaFachada = new FichaTecnicaFachada(_context);
-                ICollection<string> validacoes = produtoFachada.ValidarProduto(produto);
-                ICollection<string> validacoesFicha = fichaFachada.ValidarFicha(produto.fichaTecnica);
+                ICollection<string> validacoes = produtoFachada.ValidarProduto(produtoVM.produto);
+                ICollection<string> validacoesFicha = fichaFachada.ValidarFicha(produtoVM.produto.fichaTecnica);
                 foreach (string item in validacoesFicha)
                 {
                     validacoes.Add(item);
                 }
                 if (validacoes.Count() == 0)
                 {
-                    
-                    produtoFachada.salvar(produto);
+                    UsuarioFachada uFachada = new UsuarioFachada(_context); 
+                    Usuario usuario = uFachada.existe(produtoVM.usuario);
+                    if (usuario != null)
+                    {
+                        produtoFachada.salvar(produtoVM.produto);
+                        LogFachada lFachada = new LogFachada(_context);
+                        string descricao = "Inserção do Produto: " + produtoVM.produto.nome + ", Id: " + produtoVM.produto.id;
+                        Log log = lFachada.gerarLog(descricao, usuario.id, false, true, produtoVM.produto);
+                    }
+                    else
+                    {
+                        validacoes.Add("Usuário não encontrado");
+                        return View("Error", validacoes);
+                    }
                 }
                 else
                 {
@@ -131,8 +143,39 @@ namespace CrudProduto.Controllers
             {
                 return NotFound();
             }
-            ProdutoViewModel pVM = new ProdutoViewModel { produto = p,  lp = linhas};
+            ProdutoViewModel pVM = new ProdutoViewModel { produto = p, manter = p,  lp = linhas};
             return View(pVM);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Editar (ProdutoViewModel produtoVM)
+        {
+            ProdutoFachada produtoFachada = new ProdutoFachada(_context);
+            ICollection<string> validacoes = produtoFachada.ValidarProduto(produtoVM.produto);
+            if(validacoes.Count() == 0)
+            {
+                UsuarioFachada uFachada = new UsuarioFachada(_context);
+                Usuario usuario = uFachada.existe(produtoVM.usuario);
+                if (usuario != null)
+                {
+                    produtoFachada.salvar(produtoVM.produto);
+                    LogFachada lFachada = new LogFachada(_context);
+                    string descricao = "Alteração do Produto: " + produtoVM.produto.nome + ", Id: " + produtoVM.produto.id;
+                    Log log = lFachada.gerarLog(descricao, usuario.id, true, false, produtoVM.manter);
+                }
+                else
+                {
+                    validacoes.Add("Usuário não encontrado");
+                    return View("Error", validacoes);
+                }
+            }
+            else
+            {
+                return View("Error", validacoes);
+            }
+            return View("Error", validacoes);
         }
 
    

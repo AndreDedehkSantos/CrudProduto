@@ -36,16 +36,29 @@ namespace CrudProduto.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Create(LinhaProduto linha)
+		public IActionResult Create(LinhaViewModel linhaVM)
 		{
-			LinhaProduto linhaProduto = new LinhaProduto(linha.nome);
 			LinhaProdutoFachada lpFachada = new LinhaProdutoFachada(_context);
 			ICollection<string> validacoes = new List<string>();
-			validacoes = lpFachada.ValidarLinha(linha);
+			validacoes = lpFachada.ValidarLinha(linhaVM.linha);
 			if(validacoes.Count() == 0)
             {
-				lpFachada.salvar(linhaProduto);
-				return RedirectToAction("Index", "Produtoes");
+				UsuarioFachada uFachada = new UsuarioFachada(_context);
+				Usuario usuario = uFachada.existe(linhaVM.usuario);
+				if (usuario != null)
+				{
+					lpFachada.salvar(linhaVM.linha);
+					LogFachada lFachada = new LogFachada(_context);
+					string descricao = "Alteração da Ficha Técnica Id: " + linhaVM.linha.id;
+					Log log = lFachada.gerarLog(descricao, usuario.id, true, false, linhaVM.linha);
+					return RedirectToAction("Index", "Produtoes");
+				}
+                else
+                {
+					validacoes.Add("Usuário não encontrado");
+					return View("Error", validacoes);
+                }
+				
 			}
             else
             {

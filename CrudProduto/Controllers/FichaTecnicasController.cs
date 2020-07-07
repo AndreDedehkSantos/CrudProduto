@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CrudProduto.Models;
 using CrudProduto.Controllers.Fachada;
 using CrudProduto.Dal;
+using CrudProduto.Models.ViewModels;
 
 namespace CrudProduto.Controllers
 {
@@ -22,19 +23,21 @@ namespace CrudProduto.Controllers
 
         public async Task<IActionResult> Edit(Produto p)
         {
-            var fichaTecnica = await _context.FichaTecnica.FindAsync(p.id);
+            FichaTecnicaFachada fichaFachada = new FichaTecnicaFachada(_context);
+            FichaTecnica fichaTecnica = fichaFachada.find(p.id);
             if (fichaTecnica == null)
             {
                 return NotFound();
             }
-            return View(fichaTecnica);
+            FichaViewModel fichaVM = new FichaViewModel{ ficha = fichaTecnica, manter = fichaTecnica };
+            return View(fichaVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, FichaTecnica fichaTecnica)
+        public async Task<IActionResult> Edit(int id, FichaViewModel fichaTecnicaVM)
         {
-            if (id != fichaTecnica.id)
+            if (id != fichaTecnicaVM.ficha.id)
             {
                 return NotFound();
             }
@@ -45,21 +48,33 @@ namespace CrudProduto.Controllers
                 {
                     FichaTecnicaFachada fichaFachada = new FichaTecnicaFachada(_context);
                     ICollection<string> validacoes = new List<string>();
-                    validacoes = fichaFachada.ValidarFicha(fichaTecnica);
+                    validacoes = fichaFachada.ValidarFicha(fichaTecnicaVM.ficha);
                     if(validacoes.Count() == 0)
                     {
-                        fichaFachada.alterar(fichaTecnica);
+                        UsuarioFachada uFachada = new UsuarioFachada(_context);
+                        Usuario usuario = uFachada.existe(fichaTecnicaVM.usuario);
+                        if (usuario != null)
+                        {
+                            fichaFachada.alterar(fichaTecnicaVM.ficha);
+                            LogFachada lFachada = new LogFachada(_context);
+                            string descricao = "Alteração da Ficha Técnica Id: " + fichaTecnicaVM.ficha.id;
+                            Log log = lFachada.gerarLog(descricao, usuario.id, true, false, fichaTecnicaVM.manter);
+                        }
+                        else
+                        {
+                            validacoes.Add("Usuário não encontrado");
+                            return View("Error", validacoes);
+                        }
+                        
                     }
                     else
                     {
-                        return View("Error");
+                        return View("Error", validacoes);
                     }
-                    _context.Update(fichaTecnica);
-                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FichaTecnicaExists(fichaTecnica.id))
+                    if (!FichaTecnicaExists(fichaTecnicaVM.ficha.id))
                     {
                         return NotFound();
                     }
@@ -70,7 +85,7 @@ namespace CrudProduto.Controllers
                 }
                 return RedirectToAction("Index", "Produtoes");
             }
-            return View(fichaTecnica);
+            return View(fichaTecnicaVM.ficha);
         }
 
         private bool FichaTecnicaExists(int id)

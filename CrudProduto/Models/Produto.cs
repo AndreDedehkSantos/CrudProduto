@@ -22,7 +22,6 @@ namespace CrudProduto.Models
 		public FichaTecnica fichaTecnica { get; set; }
 		[Display(Name = "Linha do Produto")]
 		public int linhaProdutoid { get; set; }
-		public LinhaProduto linhaProduto { get; set; }
 
 
 		public Produto()
