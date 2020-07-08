@@ -7,6 +7,8 @@ namespace CrudProduto.Models
 {
 	public class Produto : EntidadeDominio
 	{
+		[Display(Name = "Código")]
+		public string codigo { get; set; }
 		[Display(Name = "Nome")]
 		public string nome { get; set; }
 		[Display(Name = "Valor de Compra")]

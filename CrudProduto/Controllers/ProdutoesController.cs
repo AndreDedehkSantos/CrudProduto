@@ -110,6 +110,7 @@ namespace CrudProduto.Controllers
                     DateTime datetime = DateTime.ParseExact("01/02/1000", "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     produto.dataCompra = datetime;
                 }
+                produto.codigo = p.produtoConsulta.codigo;
                 produto.comprador = p.produtoConsulta.comprador;
                 produto.status = p.produtoConsulta.status;
             }
@@ -145,8 +146,14 @@ namespace CrudProduto.Controllers
             {
                 produtoVM.produto.status = true;
                 ProdutoFachada produtoFachada = new ProdutoFachada(_context);
+               
                 FichaTecnicaFachada fichaFachada = new FichaTecnicaFachada(_context);
                 ICollection<string> validacoes = produtoFachada.ValidarProduto(produtoVM.produto);
+                if (produtoFachada.ConsultarExistencia(produtoVM.produto.codigo))
+                {
+                    validacoes.Add("Já existe um produto com esse código");
+                    return View("Error", validacoes);
+                }
                 ICollection<string> validacoesFicha = fichaFachada.ValidarFicha(produtoVM.produto.fichaTecnica);
                 foreach (string item in validacoesFicha)
                 {

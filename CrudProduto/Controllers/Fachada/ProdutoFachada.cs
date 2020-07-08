@@ -29,6 +29,12 @@ namespace CrudProduto.Controllers.Fachada
 			return pDal.ConsultarProduto(p);
         }
 
+		public bool ConsultarExistencia(string codigo)
+        {
+			ProdutoDal pDAL = new ProdutoDal(_context);
+			return pDAL.ConsultarExistencia(codigo);
+		}
+
         public ICollection<EntidadeDominio> Listar()
         {
 			ProdutoDal pDAL = new ProdutoDal(_context);

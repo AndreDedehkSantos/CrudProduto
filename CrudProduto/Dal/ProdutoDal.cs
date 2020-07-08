@@ -18,6 +18,19 @@ namespace CrudProduto.Dal
 			_context = context;
 		}
 
+        public bool ConsultarExistencia(string codigo)
+        {
+            var resultado = _context.Produto.Where(x => x.codigo == codigo).ToList();
+            if(resultado != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void Alterar(EntidadeDominio entidadeDominio)
         {
             Produto produto = (Produto)entidadeDominio;
@@ -33,6 +46,12 @@ namespace CrudProduto.Dal
         public ICollection<Produto> ConsultarProduto(Produto p)
         {
             HashSet<Produto> consulta = new HashSet<Produto>();
+
+            if(p.codigo != null)
+            {
+                Produto resultado = _context.Produto.FirstOrDefault(x => x.codigo == p.codigo);
+                consulta.Add(resultado);
+            }
 
             if(p.comprador != null)
             {
@@ -79,14 +98,6 @@ namespace CrudProduto.Dal
                 }
             }
 
-            if(p.linhaProdutoid != 0)
-            {
-                var resultado = _context.Produto.Where(x => x.linhaProdutoid == p.linhaProdutoid).ToList();
-                foreach (Produto item in resultado)
-                {
-                    consulta.Add(item);
-                }
-            }
 
             if(p.dataCompra != null)
             {

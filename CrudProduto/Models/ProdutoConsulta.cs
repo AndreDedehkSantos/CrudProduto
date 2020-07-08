@@ -9,7 +9,8 @@ namespace CrudProduto.Models
     public class ProdutoConsulta
     {
 		[Display(Name = "Código")]
-		public string id { get; set; }
+        public string codigo { get; set; }
+        public string id { get; set; }
 		[Display(Name = "Nome")]
 		public string nome { get; set; }
 		[Display(Name = "Valor de Compra")]

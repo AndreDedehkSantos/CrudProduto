@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrudProduto.Migrations
 {
     [DbContext(typeof(CrudProdutoContext))]
-    [Migration("20200707182020_Migracao")]
-    partial class Migracao
+    [Migration("20200708133020_Migration2")]
+    partial class Migration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,6 +117,8 @@ namespace CrudProduto.Migrations
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("codigo");
 
                     b.Property<string>("comprador");
 

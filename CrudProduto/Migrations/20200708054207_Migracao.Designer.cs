@@ -3,14 +3,16 @@ using System;
 using CrudProduto.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CrudProduto.Migrations
 {
     [DbContext(typeof(CrudProdutoContext))]
-    partial class CrudProdutoContextModelSnapshot : ModelSnapshot
+    [Migration("20200708054207_Migracao")]
+    partial class Migracao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,8 +117,6 @@ namespace CrudProduto.Migrations
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("codigo");
 
                     b.Property<string>("comprador");
 

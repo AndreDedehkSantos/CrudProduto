@@ -8,7 +8,6 @@ namespace CrudProduto.Models.ViewModels
     public class FichaViewModel
     {
         public FichaTecnica ficha { get; set; }
-        public FichaTecnica manter { get; set; }
         public Usuario usuario { get; set; }
     }
 }

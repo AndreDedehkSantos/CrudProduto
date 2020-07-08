@@ -2,8 +2,9 @@
 
 namespace CrudProduto.Models
 {
-	public class Log : EntidadeDominio
+	public class Log 
 	{
+		public int id { get; set; }
 		public DateTime dataHora { get; set; }
 		public int idUsuario { get; set; }
 		public string descricao { get; set; }

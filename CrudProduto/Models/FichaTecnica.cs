@@ -14,7 +14,7 @@ namespace CrudProduto.Models
 		public string componenteSecundario { get; set; }
 		[Display(Name = "Categoria")]
 		public string categoria { get; set; }
-		[Display(Name = "observações")]
+		[Display(Name = "Observações")]
 		public string observacoes { get; set; }
 		[Display(Name = "Sub-Categoria")]
 		public string subCategoria { get; set; }
