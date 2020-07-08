@@ -23,6 +23,12 @@ namespace CrudProduto.Controllers.Fachada
 			pDal.Alterar(entidadeDominio);
 		}
 
+		public ICollection<Produto> ConsultarProduto(Produto p)
+        {
+			ProdutoDal pDal = new ProdutoDal(_context);
+			return pDal.ConsultarProduto(p);
+        }
+
         public ICollection<EntidadeDominio> Listar()
         {
 			ProdutoDal pDAL = new ProdutoDal(_context);

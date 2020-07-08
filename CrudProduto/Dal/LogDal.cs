@@ -17,7 +17,7 @@ namespace CrudProduto.Dal
 
         public void Salvar(Log log)
         {
-            _context.Log.Add(log);
+            _context.Add(log);
             _context.SaveChanges();
         }
 

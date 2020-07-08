@@ -10,8 +10,8 @@ namespace CrudProduto.Models.ViewModels
 	public class ProdutoViewModel
 	{
 		public Produto produto { get; set; }
-
-        public Produto manter { get; set; }
+		public ICollection<Produto> listaProd { get; set; }
+        public ProdutoConsulta produtoConsulta { get; set; }
         public LinhaProduto linha { get; set; }
 
 		public ICollection<AcessorioBasico> acessoriosB = new List<AcessorioBasico>();

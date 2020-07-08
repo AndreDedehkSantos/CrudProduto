@@ -29,19 +29,14 @@ namespace CrudProduto.Controllers
             {
                 return NotFound();
             }
-            FichaViewModel fichaVM = new FichaViewModel{ ficha = fichaTecnica, manter = fichaTecnica };
+            FichaViewModel fichaVM = new FichaViewModel{ ficha = fichaTecnica};
             return View(fichaVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, FichaViewModel fichaTecnicaVM)
+        public async Task<IActionResult> Edit(FichaViewModel fichaTecnicaVM)
         {
-            if (id != fichaTecnicaVM.ficha.id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try 
@@ -53,18 +48,24 @@ namespace CrudProduto.Controllers
                     {
                         UsuarioFachada uFachada = new UsuarioFachada(_context);
                         Usuario usuario = uFachada.existe(fichaTecnicaVM.usuario);
+                        Log log = new Log();
                         if (usuario != null)
                         {
                             fichaFachada.alterar(fichaTecnicaVM.ficha);
                             LogFachada lFachada = new LogFachada(_context);
                             string descricao = "Alteração da Ficha Técnica Id: " + fichaTecnicaVM.ficha.id;
-                            Log log = lFachada.gerarLog(descricao, usuario.id, true, false, fichaTecnicaVM.manter.ToString());
-                            lFachada.salvar(log);
+                            log = lFachada.gerarLog(descricao, usuario.id, true, false, fichaTecnicaVM.ficha.ToString());
+                            
                         }
                         else
                         {
                             validacoes.Add("Usuário não encontrado");
                             return View("Error", validacoes);
+                        }
+                        if(usuario != null)
+                        {
+                            LogFachada lFachada = new LogFachada(_context);
+                            lFachada.salvar(log);
                         }
                         
                     }

@@ -10,6 +10,7 @@ using CrudProduto.Bussiness.Services;
 using CrudProduto.Models.ViewModels;
 using CrudProduto.Controllers.Fachada;
 using System.Numerics;
+using System.Globalization;
 
 namespace CrudProduto.Controllers
 {
@@ -34,7 +35,17 @@ namespace CrudProduto.Controllers
             {
                 lista.Add((Produto)item);
             }
-            return View(lista);
+            ProdutoConsulta pConsulta = new ProdutoConsulta();
+            pConsulta.status = false;
+            ProdutoViewModel pViewModel = new ProdutoViewModel { listaProd = lista, produtoConsulta = pConsulta };
+            return View(pViewModel);
+        }
+
+        public async Task<IActionResult> Index2(ICollection<Produto> produtos)
+        {
+            ProdutoConsulta pConsulta = new ProdutoConsulta();
+            ProdutoViewModel pViewModel = new ProdutoViewModel { listaProd = produtos, produtoConsulta = pConsulta };
+            return View(pViewModel);
         }
 
         // GET: Produtoes/Details/5
@@ -59,6 +70,55 @@ namespace CrudProduto.Controllers
 
             return View(pVM);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Consultar(ProdutoViewModel p)
+        {
+            Produto produto = new Produto();
+            if (p == null)
+            {
+                return View("Index");
+            }
+            else
+            {
+                if(p.produtoConsulta.id != null)
+                {
+                    ICollection<Produto> unico = new List<Produto>();
+                    int id = int.Parse(p.produtoConsulta.id);
+                    ProdutoFachada pFachada2 = new ProdutoFachada(_context);
+                    unico.Add(pFachada2.Consultar(id));
+                    return View ("Index2", unico);
+                }
+                produto.nome = p.produtoConsulta.nome;
+                if(p.produtoConsulta.valorCompra != null)
+                {
+                    produto.valorCompra = double.Parse(p.produtoConsulta.valorCompra);
+                }
+                else
+                {
+                    produto.valorCompra = 0;
+                }
+               
+                if(p.produtoConsulta.dataCompra != null)
+                {
+                    DateTime datetime = DateTime.ParseExact(p.produtoConsulta.dataCompra, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    produto.dataCompra = datetime;
+                }
+                else
+                {
+                    DateTime datetime = DateTime.ParseExact("01/02/1000", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    produto.dataCompra = datetime;
+                }
+                produto.comprador = p.produtoConsulta.comprador;
+                produto.status = p.produtoConsulta.status;
+            }
+            ProdutoFachada pFachada = new ProdutoFachada(_context);
+            ICollection<Produto> lista = pFachada.ConsultarProduto(produto);
+            return View("Index2", lista);
+        }
+
+       
 
         // GET: Produtoes/Create
         public IActionResult Create()
@@ -144,7 +204,7 @@ namespace CrudProduto.Controllers
             {
                 return NotFound();
             }
-            ProdutoViewModel pVM = new ProdutoViewModel { produto = p, manter = p,  lp = linhas};
+            ProdutoViewModel pVM = new ProdutoViewModel { produto = p,  lp = linhas};
             return View(pVM);
         }
 
@@ -159,25 +219,31 @@ namespace CrudProduto.Controllers
             {
                 UsuarioFachada uFachada = new UsuarioFachada(_context);
                 Usuario usuario = uFachada.existe(produtoVM.usuario);
+                Log log = new Log();
                 if (usuario != null)
                 {
-                    produtoFachada.salvar(produtoVM.produto);
+                    produtoFachada.alterar(produtoVM.produto);
                     LogFachada lFachada = new LogFachada(_context);
                     string descricao = "Alteração do Produto: " + produtoVM.produto.nome + ", Id: " + produtoVM.produto.id;
-                    Log log = lFachada.gerarLog(descricao, usuario.id, true, false, produtoVM.manter.ToString());
-                    lFachada.salvar(log);
+                    log = lFachada.gerarLog(descricao, usuario.id, false, true, produtoVM.produto.ToString());
+                    
                 }
                 else
                 {
                     validacoes.Add("Usuário não encontrado");
                     return View("Error", validacoes);
                 }
+                if(usuario != null)
+                {
+                    LogFachada lFachada = new LogFachada(_context);
+                    lFachada.salvar(log);
+                }
             }
             else
             {
                 return View("Error", validacoes);
             }
-            return View("Error", validacoes);
+            return RedirectToAction("Index");
         }
 
    

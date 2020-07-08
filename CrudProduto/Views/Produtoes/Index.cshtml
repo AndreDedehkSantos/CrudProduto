@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CrudProduto.Models.Produto>
+﻿@model CrudProduto.Models.ViewModels.ProdutoViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -9,33 +9,99 @@
 <p>
     <a class="btn btn-primary" asp-action="Create">Novo Produto</a>
 </p>
+<form asp-action="Consultar">
+    <div class="row">
+        <div class="col-2">
+            <div class="form-group">
+                <label asp-for="produtoConsulta.id" class="control-label"></label>
+                <input asp-for="produtoConsulta.id" class="form-control" />
+                <span asp-validation-for="produtoConsulta.id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label asp-for="produtoConsulta.nome" class="control-label"></label>
+                <input asp-for="produtoConsulta.nome" class="form-control" />
+                <span asp-validation-for="produtoConsulta.nome" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label asp-for="produtoConsulta.valorCompra" class="control-label"></label>
+                <input asp-for="produtoConsulta.valorCompra" class="form-control" />
+                <span asp-validation-for="produtoConsulta.valorCompra" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label asp-for="produtoConsulta.quantidade" class="control-label"></label>
+                <input asp-for="produtoConsulta.quantidade" class="form-control" />
+                <span asp-validation-for="produtoConsulta.quantidade" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label asp-for="produtoConsulta.dataCompra" class="control-label"></label>
+                <input asp-for="produtoConsulta.dataCompra" class="form-control" />
+                <span asp-validation-for="produtoConsulta.dataCompra" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label asp-for="produtoConsulta.comprador" class="control-label"></label>
+                <input asp-for="produtoConsulta.comprador" class="form-control" />
+                <span asp-validation-for="produtoConsulta.comprador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="produtoConsulta.status" /> @Html.DisplayNameFor(model => model.produtoConsulta.status)
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <input type="submit" value="Filtrar" class="btn btn-primary"/>
+        </div>
+    </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</form>
+<br><br>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.nome)
+                @Html.DisplayNameFor(model => model.produto.id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.valorCompra)
+                @Html.DisplayNameFor(model => model.produto.nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dataCompra)
+                @Html.DisplayNameFor(model => model.produto.valorCompra)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.quantidade)
+                @Html.DisplayNameFor(model => model.produto.dataCompra)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.comprador)
+                @Html.DisplayNameFor(model => model.produto.quantidade)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.status)
+                @Html.DisplayNameFor(model => model.produto.comprador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.produto.status)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.listaProd) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.nome)
             </td>

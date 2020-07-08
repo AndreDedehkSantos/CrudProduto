@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace CrudProduto.Dal
@@ -27,6 +28,85 @@ namespace CrudProduto.Dal
         public void Inativar(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public ICollection<Produto> ConsultarProduto(Produto p)
+        {
+            HashSet<Produto> consulta = new HashSet<Produto>();
+
+            if(p.comprador != null)
+            {
+                var resultado = _context.Produto.Where(x => x.comprador == p.comprador).ToList();
+                foreach (Produto item in resultado)
+                {
+                    consulta.Add(item);
+                }
+            }
+
+            if (p.status)
+            {
+                var resultado = _context.Produto.Where(x => x.status == true).ToList();
+                foreach (Produto item in resultado)
+                {
+                    consulta.Add(item);
+                }
+            }
+            else
+            {
+                var resultado = _context.Produto.Where(x => x.status == false).ToList();
+                foreach (Produto item in resultado)
+                {
+                    consulta.Add(item);
+                }
+
+            }
+
+            if(p.quantidade != 0)
+            {
+                var resultado = _context.Produto.Where(x => x.valorCompra == p.valorCompra).ToList();
+                foreach (Produto item in resultado)
+                {
+                    consulta.Add(item);
+                }
+            }
+
+            if(p.valorCompra != 0.0)
+            {
+                var resultado = _context.Produto.Where(x => x.valorCompra == p.valorCompra).ToList();
+                foreach (Produto item in resultado)
+                {
+                    consulta.Add(item);
+                }
+            }
+
+            if(p.linhaProdutoid != 0)
+            {
+                var resultado = _context.Produto.Where(x => x.linhaProdutoid == p.linhaProdutoid).ToList();
+                foreach (Produto item in resultado)
+                {
+                    consulta.Add(item);
+                }
+            }
+
+            if(p.dataCompra != null)
+            {
+                var resultado = _context.Produto.Where(x => x.dataCompra == p.dataCompra).ToList();
+                foreach (Produto item in resultado)
+                {
+                    consulta.Add(item);
+                }
+            }
+
+            if (p.nome != null)
+            {
+                var resultado = _context.Produto.Where(x => x.nome == p.nome).ToList();
+                foreach(Produto item in resultado)
+                {
+                    consulta.Add(item);
+                }
+            }
+
+            return consulta;
         }
 
         public ICollection<EntidadeDominio> Listar()

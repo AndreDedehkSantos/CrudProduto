@@ -19,7 +19,8 @@ namespace CrudProduto.Controllers.Fachada
 
         public void alterar(EntidadeDominio entidadeDominio)
         {
-            
+            FichaTecnicaDal fichaDal = new FichaTecnicaDal(_context);
+            fichaDal.Alterar(entidadeDominio);
         }
         public FichaTecnica find(int id)
         {

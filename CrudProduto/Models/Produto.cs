@@ -12,12 +12,14 @@ namespace CrudProduto.Models
 		[Display(Name = "Valor de Compra")]
 		public double valorCompra { get; set; }
 		[Display(Name = "Data da compra")]
+		[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+		[DataType(DataType.Date)]
 		public DateTime dataCompra { get; set; }
 		[Display(Name = "Quantidade")]
 		public int quantidade { get; set; }
 		[Display(Name = "Comprador")]
 		public string comprador { get; set; }
-		[Display(Name = "Status")]
+		[Display(Name = "Ativo")]
 		public bool status { get; set; }
 		public FichaTecnica fichaTecnica { get; set; }
 		[Display(Name = "Linha do Produto")]
